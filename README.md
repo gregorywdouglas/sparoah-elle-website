@@ -40,10 +40,11 @@ Only pre-launch corrections were made.
 
 ## Still required before publishing
 
-1. **Confirm the contact address.** All calls to action use
-   `gregory.w.douglas@cheopsconsulting.com` so they work immediately. Replace with
-   `hello@sparoahelle.com` and `privacy@sparoahelle.com` once those mailboxes or aliases are active.
-   The address appears in `index.html` (4 places), `privacy.html` (2), and `404.html` (1).
+1. **Confirm both mailboxes receive mail before deploying.** Calls to action now use
+   `hello@sparoahelle.com` (7 places: `index.html` ×5, `privacy.html` ×1, `404.html` ×1) and
+   `privacy@sparoahelle.com` (1 place: the privacy notice contact section). These are the only
+   contact routes on the site — if either mailbox is not yet live, deploying makes the site
+   unreachable. Send a test message to each and confirm delivery first.
 2. **Confirm the initial audience.** The page states girls ages 7-11 in the hero eyebrow.
 3. **Confirm founder naming.** The page identifies Gregory Douglas as founder.
 4. **Do not add "LLC"** until the exact legal entity name is registered and active.

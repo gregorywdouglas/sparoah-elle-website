@@ -53,10 +53,20 @@ contrast if you change any color token.
 
 ## Contact addresses
 
-All CTAs currently use `gregory.w.douglas@cheopsconsulting.com` (7 occurrences: 4 in `index.html`,
-2 in `privacy.html`, 1 in `404.html`). When Sparoah Elle mailboxes are active, replace with:
-- `hello@sparoahelle.com` — the three CTAs and the footer link
-- `privacy@sparoahelle.com` — the privacy notice contact section only
+Migrated off `gregory.w.douglas@cheopsconsulting.com` on 2026-08-12. Current state:
+
+- **`hello@sparoahelle.com`** — 7 occurrences: 4 CTAs and the footer link in `index.html`, the footer
+  link in `privacy.html`, the footer link in `404.html`. Display name **`Sparoah Elle`**.
+- **`privacy@sparoahelle.com`** — 1 occurrence: the privacy notice contact section only. Display name
+  **`Sparoah Elle Privacy`**.
+
+Both are Microsoft 365 shared mailboxes. Do not add "Team", "Office", "Support", or "Data Protection
+Officer" to either display name — one person operates both, and naming a department that does not
+exist is a false statement in the From line. No legal suffix in a display name, before or after
+entity registration.
+
+Never reintroduce a personal or Cheops address into public site copy. If a new CTA is added, it uses
+`hello@`. See `docs/specs/adult-intake.md` §11.2.
 
 ## Deployment
 
