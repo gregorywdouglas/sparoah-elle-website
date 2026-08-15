@@ -59,6 +59,10 @@ button, input, textarea, select { font: inherit; }
 
 .shell { width: var(--shell); margin-inline: auto; }
 .section { padding: 108px 0; }
+/* The header is sticky, so anchor targets must clear it or their headings land underneath. */
+section[id], #main { scroll-margin-top: 100px; }
+/* Programmatic focus target for anchor navigation; never a keyboard tab stop. */
+section[tabindex="-1"]:focus { outline: none; }
 .eyebrow {
   margin: 0 0 16px;
   color: var(--gold-deep);
@@ -202,6 +206,16 @@ p { color: var(--ink-soft); }
   margin-bottom: 34px;
   font-size: clamp(1.07rem, 1.7vw, 1.28rem);
 }
+.quest-definition {
+  max-width: 620px;
+  margin: 0 0 30px;
+  padding-left: 16px;
+  border-left: 2px solid var(--gold);
+  font-size: clamp(.95rem, 1.25vw, 1.03rem);
+  line-height: 1.6;
+}
+/* Tighten the gap only when the definition follows the lede. */
+.hero-lede:has(+ .quest-definition) { margin-bottom: 20px; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 13px; }
 .button {
   min-height: 53px;
@@ -346,6 +360,16 @@ blockquote {
   line-height: 1.1;
 }
 
+/* Restrained highlight — deliberately not the blockquote treatment, which is display-scale. */
+.story-bridge {
+  margin: 30px 0 0;
+  padding: 22px 26px;
+  background: var(--ivory);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 14px 14px 0;
+}
+.story-copy .story-bridge { font-size: 1.02rem; }
+
 .quest-section {
   background:
     linear-gradient(rgba(239,229,216,.72), rgba(239,229,216,.72)),
@@ -400,7 +424,23 @@ blockquote {
 .text-link span { transition: transform .2s ease; }
 .text-link:hover span { transform: translateX(5px); }
 .quest-includes { padding: clamp(28px, 5vw, 60px); }
-.includes-label { margin-bottom: 24px; }
+/* Heading names what the family receives; the note keeps planned status visible. */
+.includes-label {
+  margin: 0 0 5px;
+  font-size: 1.02rem;
+  font-weight: 800;
+  letter-spacing: .01em;
+}
+.includes-note {
+  margin: 0 0 24px;
+  color: var(--gold-deep);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.includes-note em { font-style: normal; }
 .error-actions { margin-top: 28px; }
 .quest-includes article {
   display: grid;
@@ -438,6 +478,43 @@ blockquote {
 .steps-grid span { color: var(--gold-deep); font-size: .72rem; font-weight: 850; letter-spacing: .12em; }
 .steps-grid h3 { margin: 30px 0 8px; font-family: var(--serif); font-size: 1.58rem; font-weight: 600; }
 .steps-grid p { margin-bottom: 0; font-size: .92rem; }
+
+/* Service culmination — sits inside the journey section so it reads as the arc's end. */
+.service-callout {
+  margin-top: 34px;
+  padding: clamp(28px, 4vw, 44px);
+  background: var(--ivory);
+  border: 1px solid rgba(143,105,47,.28);
+  border-radius: 22px;
+}
+.service-arc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 32px;
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+  color: var(--gold-deep);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.service-arc li { position: relative; }
+/* Decorative connector only — the ordered list carries the sequence. */
+.service-arc li:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  right: -21px;
+  color: var(--gold);
+}
+.service-callout h3 {
+  margin: 0 0 10px;
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+  font-weight: 600;
+}
+.service-callout p { max-width: 760px; margin: 0; font-size: 1rem; }
 
 .promise { color: var(--paper); background: var(--ink); }
 .promise-grid {
@@ -528,6 +605,7 @@ blockquote {
 .cta-card .eyebrow { color: var(--gold-pale); }
 .cta-card h2 { color: var(--paper); }
 .cta-card p { max-width: 720px; color: rgba(255,253,249,.75); }
+.cta-expectations { margin: 16px 0 0; color: rgba(255,253,249,.82); font-size: .9rem; }
 .cta-actions { display: grid; justify-items: start; gap: 13px; }
 .button-light { color: var(--ink); background: var(--paper); box-shadow: 0 17px 36px rgba(27,23,21,.18); }
 .cta-actions p { margin: 0; font-size: .74rem; }
@@ -637,6 +715,12 @@ blockquote {
   .founder-card { grid-template-columns: 1fr; padding: 30px 24px; }
   .founder-mark { width: 100px; }
   .cta-card { padding: 34px 23px; border-radius: 22px; }
+  section[id], #main { scroll-margin-top: 88px; }
+  .quest-definition { padding-left: 13px; }
+  .story-bridge { padding: 18px 20px; border-radius: 0 12px 12px 0; }
+  .service-callout { margin-top: 26px; padding: 24px 20px; border-radius: 18px; }
+  .service-arc { gap: 8px 28px; }
+  .service-arc li:not(:last-child)::after { right: -19px; }
   .footer-grid { grid-template-columns: 1fr; }
   .footer-links { justify-content: flex-start; }
 }

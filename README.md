@@ -1,8 +1,10 @@
-# Sparoah Elle Landing Page — Version 1.1
+# Sparoah Elle Landing Page — Version 1.2
 
-Deployment-ready static site for `https://sparoahelle.com`. Version 1.1 preserves every approved
-Version 1 strategy, brand, child-safety, privacy, founder-positioning, and truthfulness decision.
-Only pre-launch corrections were made.
+Deployment-ready static site for `https://sparoahelle.com`. Version 1.2 is a narrow content and
+CSS enhancement of the live site — not a redesign, replatform, or restart. It preserves every
+approved Version 1 strategy, brand, child-safety, privacy, founder-positioning, and truthfulness
+decision. Requirements: `docs/specs/Sparoah_Elle_Website_v1.2_Enhancement_Requirements_for_Claude_Code.md`.
+Authoritative baseline: `docs/specs/Sparoah_Elle_Website_Handoff.md`.
 
 ## Files
 
@@ -19,6 +21,35 @@ Only pre-launch corrections were made.
 | `icon-512.png` | Organization logo reference for structured data (new in 1.1) |
 | `og-image.png` | Social sharing image, 1200x630 |
 | `robots.txt`, `sitemap.xml` | Search-engine files |
+
+## What changed in Version 1.2
+
+1. **Plain-language Quest definition (REQ-002).** A one-sentence definition now sits in the hero,
+   directly under the lede, so a visitor understands the branded term before reaching the
+   six-component list. It names no delivery format — see the open decision below.
+2. **Parent-centered bridge (REQ-003).** The founding story now closes on the parent's own
+   experience: seeing the spark without a clear way to help an idea forward without taking it over.
+3. **Receives vs. does (REQ-004).** The Quest card list is headed **"What your family receives"**
+   with *"Planned components of The Power Within"* retained beneath it, and the journey eyebrow now
+   reads **"What your family does together."** The planned-status qualifier is deliberate: the
+   handoff and `CLAUDE.md` require components stay visibly unshipped, which outranks the bare
+   REQ-004 wording in the spec's own decision order.
+4. **Service culmination (REQ-005).** A callout closing the journey section presents
+   Discovery → Action → Contribution as an ordered list, so service reads as the arc's end rather
+   than merely step six. No community-impact or measured-outcome claim is made.
+5. **Founder trust bridge (REQ-006).** One sentence connects operating discipline to being worthy
+   of a child's trust and a family's time. No new credentials or advisors.
+6. **CTA journey (REQ-007).** The navigation, hero, and Quest-card CTAs now scroll to
+   `#founding-families` instead of opening a mail client. The final CTA there is the only email
+   action, and its prefilled body now states the sender is an adult who has not included a child's
+   personal information. New copy states plainly that joining does not guarantee selection or
+   enroll a child.
+7. **Sticky-header anchor offset (REQ-013).** The site had no `scroll-margin-top`, so anchor
+   targets landed underneath the sticky header. Latent before — three CTAs now scroll — so it is
+   fixed here.
+
+Unchanged by design: metadata and structured data (already consistent with the visible page),
+`script.js`, `privacy.html`, `staticwebapp.config.json`, the palette, and the type system.
 
 ## What changed in Version 1.1
 
@@ -40,10 +71,12 @@ Only pre-launch corrections were made.
 
 ## Still required before publishing
 
-1. **Confirm the contact address.** All calls to action use
-   `gregory.w.douglas@cheopsconsulting.com` so they work immediately. Replace with
-   `hello@sparoahelle.com` and `privacy@sparoahelle.com` once those mailboxes or aliases are active.
-   The address appears in `index.html` (4 places), `privacy.html` (2), and `404.html` (1).
+1. ~~**Confirm both mailboxes receive mail before deploying.**~~ **Done 2026-08-15.** Test messages
+   to `hello@sparoahelle.com` and `privacy@sparoahelle.com` were both delivered successfully. Calls
+   to action use `hello@` (4 `mailto:` links after REQ-007: `index.html` ×2 — the final CTA and the
+   footer — plus `privacy.html` ×1 and `404.html` ×1) and `privacy@` (1 link, the privacy notice
+   contact section). These remain the only contact routes on the site, so re-test if either mailbox
+   is ever migrated or renamed.
 2. **Confirm the initial audience.** The page states girls ages 7-11 in the hero eyebrow.
 3. **Confirm founder naming.** The page identifies Gregory Douglas as founder.
 4. **Do not add "LLC"** until the exact legal entity name is registered and active.
@@ -51,7 +84,43 @@ Only pre-launch corrections were made.
    embedding a waitlist form, or collecting personalization information.
 6. **Update `sitemap.xml` `lastmod`** to the actual publish date.
 
-## Deployment requirements (host-agnostic)
+## Open owner decisions carried into Version 1.2
+
+These are recorded, not guessed. Version 1.2 was implemented so that none of them had to be
+resolved to ship.
+
+| Ref | Decision | Status |
+| --- | --- | --- |
+| DEC-001 | Final Quest delivery format — physical, printable, digital, facilitated, hybrid, one-time, or subscription | **Unresolved.** The site uses the generic Quest definition only. No kit, box, workbook, app, portal, printable, session, or subscription language appears anywhere. |
+| DEC-002 | Public Sparoah Elle email activation | **Resolved 2026-08-15.** Both mailboxes active and delivery-tested. |
+| DEC-003 | Adult intake form timing | **Out of scope.** Version 1.2 adds no form. Implement only under `docs/specs/adult-intake.md` with separate authorization. |
+| DEC-004 | Product mockup | **None supplied.** No placeholder, stock photo, or invented rendering was added; the six-step orbit remains. |
+| DEC-005 | Public faith positioning | **Unchanged.** No prayer text, verse, or faith badge added. Alignment is expressed through operating boundaries. |
+| DEC-006 | Audience validation | **Unchanged.** Girls ages 7–11 remains the approved pilot assumption. |
+
+## Deployment
+
+Run `./deploy.sh` from the project root. It runs the pre-flight checks, stages an explicit
+allowlist of the 13 public files, and deploys to Azure Static Web Apps. See `CLAUDE.md` for why
+`swa deploy ./` must not be used directly, and for the rule about never deleting a live app.
+
+### Current live state (as of 2026-08-15)
+
+| Address | Status |
+| --- | --- |
+| `https://sparoahelle.com` | **Live** — canonical, valid certificate |
+| `https://www.sparoahelle.com` | **Live** — valid certificate |
+
+Both domains are bound and serving. `http://` redirects to `https://` on both.
+
+**One step remains, and it can only be done in the portal.** `https://www.sparoahelle.com`
+currently serves the site directly rather than redirecting to the apex, so the site answers at two
+addresses. The `<link rel="canonical">` tag points search engines at the apex, but to get a real
+redirect, open the Static Web App → **Custom domains**, select `sparoahelle.com`, and click **Set
+default**. Azure then redirects all other bound domains to it. The Azure CLI does not expose this
+setting.
+
+### Host requirements (host-agnostic)
 
 Upload the **contents** of this folder, not the enclosing folder. The web root must contain
 `index.html` directly.
@@ -63,8 +132,9 @@ Upload the **contents** of this folder, not the enclosing folder. The web root m
 
 ### Post-launch verification checklist
 
-- [ ] `https://sparoahelle.com` loads over HTTPS with a valid certificate
-- [ ] `http://` and `www.` both redirect to `https://sparoahelle.com`
+- [x] `https://sparoahelle.com` loads over HTTPS with a valid certificate
+- [x] `http://` redirects to `https://` on both apex and `www`
+- [ ] `www.` redirects to `https://sparoahelle.com` — needs **Set default** in the portal
 - [ ] Every nav link scrolls to the correct section
 - [ ] All email CTAs open a mail client with the correct subject
 - [ ] `privacy.html` loads and links back home

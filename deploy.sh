@@ -27,5 +27,42 @@ if grep -n 'style="' -- *.html; then
   exit 1
 fi
 
-echo "Checks passed. Deploying..."
-swa deploy ./ --deployment-token "$SWA_DEPLOYMENT_TOKEN" --env production
+# Everything published to the web root, listed explicitly. Anything absent from
+# this list stays private. Deploying the folder wholesale would publish CLAUDE.md,
+# README.md, and docs/specs/adult-intake.md at their own URLs.
+PUBLIC_FILES=(
+  index.html
+  privacy.html
+  404.html
+  styles.css
+  script.js
+  favicon.svg
+  favicon.ico
+  apple-touch-icon.png
+  icon-512.png
+  og-image.png
+  robots.txt
+  sitemap.xml
+  staticwebapp.config.json
+)
+
+STAGE_ROOT="$(mktemp -d)"
+trap 'rm -rf "$STAGE_ROOT"' EXIT
+mkdir -p "$STAGE_ROOT/site"
+
+for f in "${PUBLIC_FILES[@]}"; do
+  if [ ! -f "$f" ]; then
+    echo "Required file is missing: $f. Aborting." >&2
+    exit 1
+  fi
+  cp "$f" "$STAGE_ROOT/site/"
+done
+
+echo "Checks passed. Staged ${#PUBLIC_FILES[@]} files. Deploying..."
+
+# StaticSitesClient refuses to run when the shell's working directory is the
+# artifact folder itself — it fails with "Current directory cannot be identical
+# to or contained within artifact folders", surfaced only under --verbose.
+# So deploy from the staging parent and name the folder.
+cd "$STAGE_ROOT"
+swa deploy ./site --deployment-token "$SWA_DEPLOYMENT_TOKEN" --env production
