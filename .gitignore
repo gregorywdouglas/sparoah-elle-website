@@ -7,6 +7,10 @@
 .swa/
 swa-cli.config.json
 
+# Azurite emulator artifacts, dropped in the project root by the SWA CLI
+AzuriteConfig
+__azurite_db*.json
+
 # OS + editor noise
 .DS_Store
 Thumbs.db

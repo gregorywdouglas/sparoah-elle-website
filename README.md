@@ -40,11 +40,11 @@ Only pre-launch corrections were made.
 
 ## Still required before publishing
 
-1. **Confirm both mailboxes receive mail before deploying.** Calls to action now use
-   `hello@sparoahelle.com` (7 places: `index.html` ×5, `privacy.html` ×1, `404.html` ×1) and
-   `privacy@sparoahelle.com` (1 place: the privacy notice contact section). These are the only
-   contact routes on the site — if either mailbox is not yet live, deploying makes the site
-   unreachable. Send a test message to each and confirm delivery first.
+1. ~~**Confirm both mailboxes receive mail before deploying.**~~ **Done 2026-08-15.** Test messages
+   to `hello@sparoahelle.com` and `privacy@sparoahelle.com` were both delivered successfully. Calls
+   to action use `hello@` (7 `mailto:` links: `index.html` ×5, `privacy.html` ×1, `404.html` ×1) and
+   `privacy@` (1 link, the privacy notice contact section). These remain the only contact routes on
+   the site, so re-test if either mailbox is ever migrated or renamed.
 2. **Confirm the initial audience.** The page states girls ages 7-11 in the hero eyebrow.
 3. **Confirm founder naming.** The page identifies Gregory Douglas as founder.
 4. **Do not add "LLC"** until the exact legal entity name is registered and active.
@@ -52,7 +52,29 @@ Only pre-launch corrections were made.
    embedding a waitlist form, or collecting personalization information.
 6. **Update `sitemap.xml` `lastmod`** to the actual publish date.
 
-## Deployment requirements (host-agnostic)
+## Deployment
+
+Run `./deploy.sh` from the project root. It runs the pre-flight checks, stages an explicit
+allowlist of the 13 public files, and deploys to Azure Static Web Apps. See `CLAUDE.md` for why
+`swa deploy ./` must not be used directly, and for the rule about never deleting a live app.
+
+### Current live state (as of 2026-08-15)
+
+| Address | Status |
+| --- | --- |
+| `https://sparoahelle.com` | **Live** — canonical, valid certificate |
+| `https://www.sparoahelle.com` | **Live** — valid certificate |
+
+Both domains are bound and serving. `http://` redirects to `https://` on both.
+
+**One step remains, and it can only be done in the portal.** `https://www.sparoahelle.com`
+currently serves the site directly rather than redirecting to the apex, so the site answers at two
+addresses. The `<link rel="canonical">` tag points search engines at the apex, but to get a real
+redirect, open the Static Web App → **Custom domains**, select `sparoahelle.com`, and click **Set
+default**. Azure then redirects all other bound domains to it. The Azure CLI does not expose this
+setting.
+
+### Host requirements (host-agnostic)
 
 Upload the **contents** of this folder, not the enclosing folder. The web root must contain
 `index.html` directly.
@@ -64,8 +86,9 @@ Upload the **contents** of this folder, not the enclosing folder. The web root m
 
 ### Post-launch verification checklist
 
-- [ ] `https://sparoahelle.com` loads over HTTPS with a valid certificate
-- [ ] `http://` and `www.` both redirect to `https://sparoahelle.com`
+- [x] `https://sparoahelle.com` loads over HTTPS with a valid certificate
+- [x] `http://` redirects to `https://` on both apex and `www`
+- [ ] `www.` redirects to `https://sparoahelle.com` — needs **Set default** in the portal
 - [ ] Every nav link scrolls to the correct section
 - [ ] All email CTAs open a mail client with the correct subject
 - [ ] `privacy.html` loads and links back home

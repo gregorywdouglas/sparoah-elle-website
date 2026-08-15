@@ -74,18 +74,46 @@ Host: **Azure Static Web Apps, Free plan.** Registrar: **Network Solutions**, wi
 **Azure DNS** (Network Solutions supports no ALIAS/ANAME record, so the apex domain cannot be bound
 without it).
 
+Live resources, all in resource group `rg-sparoah-elle-prod`:
+
+| Resource | Purpose |
+| --- | --- |
+| `stapp-sparoah-elle-site` | The live Static Web App (East US 2), `nice-moss-08e76d60f.7.azurestaticapps.net` |
+| `sparoahelle.com` DNS zone | Apex ALIAS A record targets the app by resource ID; `www` is a CNAME |
+
 Deploy with:
 
 ```bash
-swa deploy ./ --deployment-token "$SWA_DEPLOYMENT_TOKEN" --env production
+./deploy.sh
 ```
 
-Never commit the deployment token. It belongs in a local `.env` file, which is gitignored.
+Do not run `swa deploy ./` by hand. `StaticSitesClient` refuses to run when the shell's working
+directory is the artifact folder, failing with an "unknown exception" that is only visible under
+`--verbose=silly`. `deploy.sh` stages to a temp directory and deploys from its parent to avoid this.
 
-`sparoahelle.com` is set as the default custom domain, so `www` redirects to the apex automatically.
+`deploy.sh` also publishes an explicit allowlist of 13 files rather than the whole folder. Deploying
+the folder wholesale would publish `CLAUDE.md`, `README.md`, `deploy.sh`, and
+`docs/specs/adult-intake.md` at their own public URLs. Add new public assets to `PUBLIC_FILES`.
+
+Never commit the deployment token. It belongs in a local `.env` file, which is gitignored. The token
+is per-app: recreating the app invalidates it, and a fresh one comes from
+`az staticwebapp secrets list --name <app> --resource-group rg-sparoah-elle-prod --query "properties.apiKey" -o tsv`.
+Write it without a BOM — PowerShell's `Set-Content -Encoding utf8` adds one and bash cannot then
+source the file.
+
 `https://sparoahelle.com/` is canonical and is declared in the markup, `sitemap.xml`, and `robots.txt`.
 
 Update `sitemap.xml` `lastmod` whenever content changes materially.
+
+### Never delete a Static Web App you still need
+
+On this subscription, deleting a Static Web App takes hours and sometimes a full day. Throughout,
+the resource still exists but rejects all deployments with `The matching Static Web App is being
+deleted`, and it holds its custom-domain reservations, so those hostnames cannot be bound anywhere
+else. Two apps were lost this way on 2026-08-12 and 2026-08-13.
+
+If an app must be replaced, create the replacement and cut DNS over to it **first**, and only then
+delete the old one.
 
 ## Before any deploy
 
