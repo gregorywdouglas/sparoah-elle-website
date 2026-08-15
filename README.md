@@ -1,8 +1,10 @@
-# Sparoah Elle Landing Page — Version 1.1
+# Sparoah Elle Landing Page — Version 1.2
 
-Deployment-ready static site for `https://sparoahelle.com`. Version 1.1 preserves every approved
-Version 1 strategy, brand, child-safety, privacy, founder-positioning, and truthfulness decision.
-Only pre-launch corrections were made.
+Deployment-ready static site for `https://sparoahelle.com`. Version 1.2 is a narrow content and
+CSS enhancement of the live site — not a redesign, replatform, or restart. It preserves every
+approved Version 1 strategy, brand, child-safety, privacy, founder-positioning, and truthfulness
+decision. Requirements: `docs/specs/Sparoah_Elle_Website_v1.2_Enhancement_Requirements_for_Claude_Code.md`.
+Authoritative baseline: `docs/specs/Sparoah_Elle_Website_Handoff.md`.
 
 ## Files
 
@@ -19,6 +21,35 @@ Only pre-launch corrections were made.
 | `icon-512.png` | Organization logo reference for structured data (new in 1.1) |
 | `og-image.png` | Social sharing image, 1200x630 |
 | `robots.txt`, `sitemap.xml` | Search-engine files |
+
+## What changed in Version 1.2
+
+1. **Plain-language Quest definition (REQ-002).** A one-sentence definition now sits in the hero,
+   directly under the lede, so a visitor understands the branded term before reaching the
+   six-component list. It names no delivery format — see the open decision below.
+2. **Parent-centered bridge (REQ-003).** The founding story now closes on the parent's own
+   experience: seeing the spark without a clear way to help an idea forward without taking it over.
+3. **Receives vs. does (REQ-004).** The Quest card list is headed **"What your family receives"**
+   with *"Planned components of The Power Within"* retained beneath it, and the journey eyebrow now
+   reads **"What your family does together."** The planned-status qualifier is deliberate: the
+   handoff and `CLAUDE.md` require components stay visibly unshipped, which outranks the bare
+   REQ-004 wording in the spec's own decision order.
+4. **Service culmination (REQ-005).** A callout closing the journey section presents
+   Discovery → Action → Contribution as an ordered list, so service reads as the arc's end rather
+   than merely step six. No community-impact or measured-outcome claim is made.
+5. **Founder trust bridge (REQ-006).** One sentence connects operating discipline to being worthy
+   of a child's trust and a family's time. No new credentials or advisors.
+6. **CTA journey (REQ-007).** The navigation, hero, and Quest-card CTAs now scroll to
+   `#founding-families` instead of opening a mail client. The final CTA there is the only email
+   action, and its prefilled body now states the sender is an adult who has not included a child's
+   personal information. New copy states plainly that joining does not guarantee selection or
+   enroll a child.
+7. **Sticky-header anchor offset (REQ-013).** The site had no `scroll-margin-top`, so anchor
+   targets landed underneath the sticky header. Latent before — three CTAs now scroll — so it is
+   fixed here.
+
+Unchanged by design: metadata and structured data (already consistent with the visible page),
+`script.js`, `privacy.html`, `staticwebapp.config.json`, the palette, and the type system.
 
 ## What changed in Version 1.1
 
@@ -42,15 +73,30 @@ Only pre-launch corrections were made.
 
 1. ~~**Confirm both mailboxes receive mail before deploying.**~~ **Done 2026-08-15.** Test messages
    to `hello@sparoahelle.com` and `privacy@sparoahelle.com` were both delivered successfully. Calls
-   to action use `hello@` (7 `mailto:` links: `index.html` ×5, `privacy.html` ×1, `404.html` ×1) and
-   `privacy@` (1 link, the privacy notice contact section). These remain the only contact routes on
-   the site, so re-test if either mailbox is ever migrated or renamed.
+   to action use `hello@` (4 `mailto:` links after REQ-007: `index.html` ×2 — the final CTA and the
+   footer — plus `privacy.html` ×1 and `404.html` ×1) and `privacy@` (1 link, the privacy notice
+   contact section). These remain the only contact routes on the site, so re-test if either mailbox
+   is ever migrated or renamed.
 2. **Confirm the initial audience.** The page states girls ages 7-11 in the hero eyebrow.
 3. **Confirm founder naming.** The page identifies Gregory Douglas as founder.
 4. **Do not add "LLC"** until the exact legal entity name is registered and active.
 5. **Review the privacy notice with counsel** before collecting payments, using analytics,
    embedding a waitlist form, or collecting personalization information.
 6. **Update `sitemap.xml` `lastmod`** to the actual publish date.
+
+## Open owner decisions carried into Version 1.2
+
+These are recorded, not guessed. Version 1.2 was implemented so that none of them had to be
+resolved to ship.
+
+| Ref | Decision | Status |
+| --- | --- | --- |
+| DEC-001 | Final Quest delivery format — physical, printable, digital, facilitated, hybrid, one-time, or subscription | **Unresolved.** The site uses the generic Quest definition only. No kit, box, workbook, app, portal, printable, session, or subscription language appears anywhere. |
+| DEC-002 | Public Sparoah Elle email activation | **Resolved 2026-08-15.** Both mailboxes active and delivery-tested. |
+| DEC-003 | Adult intake form timing | **Out of scope.** Version 1.2 adds no form. Implement only under `docs/specs/adult-intake.md` with separate authorization. |
+| DEC-004 | Product mockup | **None supplied.** No placeholder, stock photo, or invented rendering was added; the six-step orbit remains. |
+| DEC-005 | Public faith positioning | **Unchanged.** No prayer text, verse, or faith badge added. Alignment is expressed through operating boundaries. |
+| DEC-006 | Audience validation | **Unchanged.** Girls ages 7–11 remains the approved pilot assumption. |
 
 ## Deployment
 

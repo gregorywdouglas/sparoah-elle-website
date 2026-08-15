@@ -53,12 +53,19 @@ contrast if you change any color token.
 
 ## Contact addresses
 
-Migrated off `gregory.w.douglas@cheopsconsulting.com` on 2026-08-12. Current state:
+Migrated off `gregory.w.douglas@cheopsconsulting.com` on 2026-08-12. Delivery to both mailboxes was
+tested and confirmed on 2026-08-15. Current state:
 
-- **`hello@sparoahelle.com`** — 7 occurrences: 4 CTAs and the footer link in `index.html`, the footer
-  link in `privacy.html`, the footer link in `404.html`. Display name **`Sparoah Elle`**.
+- **`hello@sparoahelle.com`** — 4 `mailto:` links: the final Founding Family CTA and the footer link
+  in `index.html`, the footer link in `privacy.html`, the footer link in `404.html`. Display name
+  **`Sparoah Elle`**.
 - **`privacy@sparoahelle.com`** — 1 occurrence: the privacy notice contact section only. Display name
   **`Sparoah Elle Privacy`**.
+
+Since Version 1.2, the navigation, hero, and Quest-card CTAs link to `#founding-families` instead of
+opening a mail client, so the final CTA in that section is the **only** place on the page that starts
+an email. Do not reintroduce a `mailto:` above that section — REQ-007 exists so a visitor sees the
+pilot context and the adult-only notice before an email client opens.
 
 Both are Microsoft 365 shared mailboxes. Do not add "Team", "Office", "Support", or "Data Protection
 Officer" to either display name — one person operates both, and naming a department that does not
