@@ -261,7 +261,9 @@ p { color: var(--ink-soft); }
   color: var(--gold);
 }
 
-.hero-art { min-height: 510px; display: grid; place-items: center; }
+/* The orbit sets its own height. It carried six step chips until the correction
+   release removed them; a fixed min-height now only adds dead space. */
+.hero-art { display: grid; place-items: center; }
 .quest-orbit {
   position: relative;
   width: min(455px, 42vw);
@@ -304,29 +306,6 @@ p { color: var(--ink-soft); }
   font-weight: 500;
   line-height: 1.18;
 }
-.orbit-item {
-  position: absolute;
-  z-index: 3;
-  width: 92px;
-  min-height: 66px;
-  display: grid;
-  place-content: center;
-  gap: 1px;
-  padding: 9px;
-  text-align: center;
-  background: var(--paper);
-  border: 1px solid rgba(143,105,47,.27);
-  border-radius: 16px;
-  box-shadow: 0 13px 28px rgba(50,34,26,.12);
-}
-.orbit-item b { color: var(--gold-deep); font-size: .61rem; letter-spacing: .12em; }
-.orbit-item span { font-family: var(--serif); font-size: 1.05rem; }
-.orbit-one { left: 50%; top: -8%; transform: translateX(-50%); }
-.orbit-two { right: -7%; top: 21%; }
-.orbit-three { right: 0; bottom: 10%; }
-.orbit-four { left: 50%; bottom: -8%; transform: translateX(-50%); }
-.orbit-five { left: 0; bottom: 10%; }
-.orbit-six { left: -7%; top: 21%; }
 
 .strip { padding: 34px 0; color: var(--paper); background: var(--ink); }
 .definition-grid {
@@ -432,7 +411,7 @@ blockquote {
   letter-spacing: .01em;
 }
 .includes-note {
-  margin: 0 0 24px;
+  margin: 0 0 10px;
   color: var(--gold-deep);
   font-size: .72rem;
   font-weight: 800;
@@ -441,22 +420,30 @@ blockquote {
   text-transform: uppercase;
 }
 .includes-note em { font-style: normal; }
+/* Planned status has to stay readable, so this is body text, not fine print. */
+.includes-qualifier { margin: 0 0 22px; font-size: .86rem; line-height: 1.55; }
 .error-actions { margin-top: 28px; }
-.quest-includes article {
-  display: grid;
-  grid-template-columns: 40px 1fr;
-  gap: 16px;
-  padding: 21px 0;
+/* Deliberately unnumbered: the components are a set, the journey is a sequence.
+   The dot is decorative — an empty ::before, so no marker text is announced. */
+.includes-list { margin: 0; padding: 0; list-style: none; }
+.includes-list li {
+  position: relative;
+  padding: 21px 0 21px 25px;
   border-bottom: 1px solid var(--line);
 }
-.quest-includes article:first-child { padding-top: 0; }
-.quest-includes article:last-child { padding-bottom: 0; border-bottom: 0; }
-.quest-includes article > span {
-  color: var(--gold-deep);
-  font-size: .7rem;
-  font-weight: 850;
-  letter-spacing: .1em;
+.includes-list li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 34px;
+  width: 7px;
+  height: 7px;
+  background: var(--gold);
+  border-radius: 50%;
 }
+.includes-list li:first-child { padding-top: 0; }
+.includes-list li:first-child::before { top: 13px; }
+.includes-list li:last-child { padding-bottom: 0; border-bottom: 0; }
 .quest-includes h4 { margin-bottom: 5px; font-family: var(--serif); font-size: 1.28rem; font-weight: 600; }
 .quest-includes p { margin-bottom: 0; font-size: .92rem; }
 
@@ -574,7 +561,8 @@ blockquote {
   letter-spacing: -.04em;
 }
 .founder-card h2 { max-width: 840px; margin-bottom: 20px; }
-.founder-card p:last-child { max-width: 800px; margin-bottom: 0; font-size: 1.02rem; }
+.founder-card p { max-width: 800px; font-size: 1.02rem; }
+.founder-card p:last-child { margin-bottom: 0; }
 
 .cta-section { padding: 0 0 110px; background: var(--ivory); }
 .cta-card {
@@ -608,7 +596,22 @@ blockquote {
 .cta-expectations { margin: 16px 0 0; color: rgba(255,253,249,.82); font-size: .9rem; }
 .cta-actions { display: grid; justify-items: start; gap: 13px; }
 .button-light { color: var(--ink); background: var(--paper); box-shadow: 0 17px 36px rgba(27,23,21,.18); }
-.cta-actions p { margin: 0; font-size: .74rem; }
+/* Brighter than .cta-card p: the actions column sits under the card's pale
+   radial highlight, where 75% ivory drops to 4.0:1. At 92% it measures 5.2:1. */
+.cta-actions p { margin: 0; color: rgba(255,253,249,.92); font-size: .78rem; }
+/* The address stays readable when no mail handler is registered. Padding plus a
+   matching negative margin gives a 44px tap target without opening the layout up.
+   Underlined, so the link is not signalled by colour alone. */
+.cta-fallback { font-size: .85rem; }
+.cta-fallback a {
+  display: inline-block;
+  padding: 12px 4px;
+  margin: -12px -4px;
+  color: var(--paper);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 
 .site-footer { padding: 55px 0; color: rgba(255,253,249,.78); background: #120f0e; }
 .footer-grid {
@@ -677,7 +680,7 @@ blockquote {
   .hero { min-height: auto; padding-top: 70px; }
   .hero-grid, .story-grid, .quest-card, .promise-grid, .cta-card { grid-template-columns: 1fr; }
   .hero-copy { max-width: none; }
-  .hero-art { min-height: 520px; margin-top: 25px; }
+  .hero-art { margin-top: 25px; }
   .quest-orbit { width: min(470px, 74vw); }
   .definition-grid { grid-template-columns: 1fr; gap: 10px; }
   .steps-grid { grid-template-columns: repeat(2, 1fr); }
@@ -699,13 +702,9 @@ blockquote {
   .button { width: 100%; }
   .trust-line { gap: 14px; }
   .trust-line span:not(:last-child)::after { right: -10px; }
-  .hero-art { min-height: 390px; }
   .quest-orbit { width: 83vw; }
-  .orbit-item { width: 71px; min-height: 54px; border-radius: 12px; }
-  .orbit-item span { font-size: .86rem; }
-  .orbit-item b { font-size: .52rem; }
-  .orbit-one { top: -7%; }
-  .orbit-four { bottom: -7%; }
+  /* Without the chips the ring can shrink; the centre line needs the extra room. */
+  .orbit-center { inset: 24%; }
   .definition { padding: 27px 0; }
   blockquote { padding-left: 18px; font-size: 2.15rem; }
   .quest-card { border-radius: 22px; }

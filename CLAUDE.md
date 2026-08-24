@@ -1,8 +1,19 @@
 # Sparoah Elle Website — Project Context
 
-Static one-page marketing site for `https://sparoahelle.com`. Currently Version 1.1.
-Immediate objective: publish a polished, truthful, mobile-responsive site before submitting the
-2026 Good Soil Seed Capital Pitch Competition application.
+Static one-page marketing site for `https://sparoahelle.com`. The live baseline is Version 1.2;
+the working tree carries the 2026-08-23 correction release, which is **not yet deployed**.
+
+Two approved specifications govern current site copy, in this order:
+
+1. `docs/specs/Origin Story — Child Identity and Age Clarification.md` — governs the origin-story
+   passage and child-identity protection. Supersedes WEB-CORR-004 for that passage.
+2. `docs/specs/spec-website-correction.md` — governs everything else.
+
+Both supersede conflicting wording in the older review and Version 1.2 requirement documents. Those
+keep the old language for traceability, so never restore copy from them.
+
+The 2026 Good Soil application window has passed and is no longer the controlling deadline. The
+current phase is post-launch, pre-MVP validation and pilot readiness.
 
 ## Read this before changing anything
 
@@ -18,6 +29,10 @@ decisions. Do not "improve" them without asking:
 - **No inline `style=` attributes or inline `<script>`.** The CSP blocks them. Put styles in
   `styles.css`. The JSON-LD block in `index.html` is a data block, not executable script, and is fine.
 
+Do not shorten, anonymise further, expand, or rewrite the founding story beyond the approved
+identity wording. The quotation *"Because I want to start my own company."* and the transition
+*"That answer revealed something bigger…"* are preserved exactly.
+
 ## Truthfulness constraints (non-negotiable)
 
 The company is pre-revenue with no completed pilots. The site must never imply otherwise.
@@ -26,13 +41,47 @@ Do not add or allow copy that:
 - Claims customers, revenue, completed pilots, testimonials, or measurable outcomes
 - Implies endorsement, sponsorship, or affiliation with Good Soil, T.D. Jakes, Wells Fargo, or
   any other organization
-- Presents Sparoah (the child) as legal operator, founder, CEO, or competition representative
+- Names the child, or presents her as legal operator, founder, CEO, or competition representative —
+  see **Child identity** above
 - Adds "LLC" or other legal suffixes — the entity is not yet registered and confirmed active
 - Guarantees confidence, learning, development, healing, or family outcomes
 - Describes AI as replacing parents, advisors, or human review
 - Overstates founder expertise in child development, education, psychology, or consumer products
 
-Product components are **planned**, not shipped, and must stay visibly labeled as such.
+Product components are **planned**, not shipped, and must stay visibly labeled as such. They are a
+set, not a sequence: they are rendered as an unnumbered `<ul>` on purpose (WEB-CORR-005), so the
+numbered six-step journey stays the only ordered sequence on the page. Do not renumber them, and do
+not reintroduce a second presentation of the six steps anywhere else.
+
+Do not describe the Quest as a kit, box, workbook, printable, portal, app, live class, subscription,
+shipped product, facilitated session, or hybrid product. The final delivery format is undecided.
+
+## Child identity (approved 2026-08-23)
+
+The child is **never named on the public site.** The origin story refers to her as
+**"Gregory's daughter"**, never as "Sparoah". The brand may be inspired by her spark without her
+identity becoming a public business asset, and the site must not confirm that the distinctive word
+*Sparoah* is a specific minor's real first name.
+
+- The approved opening is: *"As Gregory's daughter approached her eighth birthday, he offered her
+  two summer experiences: gymnastics and a children's AI class."* **"Eighth" is spelled out**, never
+  "8th".
+- Keep the section in **third-person institutional voice**. Do not use "my daughter" and do not
+  convert it to a first-person Founder's Note without a separately approved release.
+- Never add current age, birth date, surname, full legal name, school or grade, location, schedule,
+  recurring activities, photograph, video, voice, social account, contact details, or health,
+  educational, behavioural or family information — in visible copy **or** in metadata, Open Graph
+  and X/Twitter tags, JSON-LD, alt text, image filenames, HTML or JS comments, or any documentation
+  that gets deployed.
+- Her birthday and age are a restrained one-time origin story, not a recurring promotional device.
+  Do not build content around "she was only eight", her birthday, or her ambitions. Future content
+  belongs on Gregory's founder journey, parent insight, building the Quest, protection by design,
+  stewardship and service, and verified pilot evidence.
+- Every use of **Sparoah Elle** as the company and brand name is preserved and unaffected.
+
+`tests/verify.mjs` enforces this: **every occurrence of "Sparoah" in a deployable file must be part
+of the brand name.** As of 2026-08-23 the child was named in exactly one place — the origin-story
+sentence — and that is now fixed. The guard fails on any future edit that reintroduces her name.
 
 ## Brand rules
 
@@ -47,25 +96,37 @@ Product components are **planned**, not shipped, and must stay visibly labeled a
 
 ## Accessibility
 
-Maintain WCAG AA. `--gold-deep` is `#85602c` specifically because the previous `#8f692f` measured
-4.16:1 against the quest-section background, below the 4.5:1 minimum for small text. Re-check
-contrast if you change any color token.
+Maintain WCAG AA. Two colour values are load-bearing and were each set to fix a measured failure:
+
+- `--gold-deep` is `#85602c` because the previous `#8f692f` measured 4.16:1 against the
+  quest-section background, below the 4.5:1 minimum for small text.
+- `.cta-actions p` is ivory at **92%**, not the 75% used elsewhere on that card. The CTA card has a
+  pale radial highlight in its top-right corner — exactly where the actions column sits — and 75%
+  measures 4.0:1 against it. The email fallback link is white and underlined for the same reason:
+  `--gold-pale` measures 4.05:1 there.
+
+Re-check contrast if you change any colour token, and re-run `node tests/browser.mjs`, which
+measures 32 text samples against the worst-case rendered background.
 
 ## Contact addresses
 
 Migrated off `gregory.w.douglas@cheopsconsulting.com` on 2026-08-12. Delivery to both mailboxes was
 tested and confirmed on 2026-08-15. Current state:
 
-- **`hello@sparoahelle.com`** — 4 `mailto:` links: the final Founding Family CTA and the footer link
-  in `index.html`, the footer link in `privacy.html`, the footer link in `404.html`. Display name
-  **`Sparoah Elle`**.
+- **`hello@sparoahelle.com`** — 5 `mailto:` links: in `index.html`, the final Founding Family CTA,
+  the visible address fallback directly beneath it, and the footer link; plus the footer link in
+  `privacy.html` and the footer link in `404.html`. Display name **`Sparoah Elle`**.
 - **`privacy@sparoahelle.com`** — 1 occurrence: the privacy notice contact section only. Display name
   **`Sparoah Elle Privacy`**.
 
 Since Version 1.2, the navigation, hero, and Quest-card CTAs link to `#founding-families` instead of
-opening a mail client, so the final CTA in that section is the **only** place on the page that starts
-an email. Do not reintroduce a `mailto:` above that section — REQ-007 exists so a visitor sees the
-pilot context and the adult-only notice before an email client opens.
+opening a mail client. Do not reintroduce a `mailto:` above that section — REQ-007 exists so a
+visitor sees the pilot context and the adult-only notice before an email client opens.
+
+Inside that section there are now two `hello@` links: the prefilled CTA button and, beneath it, the
+visible `Or email us directly at hello@sparoahelle.com.` fallback. The fallback is required by
+WEB-CORR-010 so the address is readable when no mail handler is registered — do not remove it as a
+duplicate. Only the button carries the prefilled subject and body.
 
 Both are Microsoft 365 shared mailboxes. Do not add "Team", "Office", "Support", or "Data Protection
 Officer" to either display name — one person operates both, and naming a department that does not
@@ -122,8 +183,26 @@ else. Two apps were lost this way on 2026-08-12 and 2026-08-13.
 If an app must be replaced, create the replacement and cut DNS over to it **first**, and only then
 delete the old one.
 
+## Tests
+
+Two dependency-free Node suites live in `tests/`. They are deliberately dependency-free: the site
+ships no third-party code and the CSP forbids external origins, so the tests must not add any.
+
+```bash
+node tests/verify.mjs    # static validation + copy/policy assertions
+node tests/browser.mjs   # rendering, interaction, accessibility (drives Edge or Chrome over CDP)
+```
+
+`tests/verify.mjs` enforces the truthfulness rules above as executable assertions — the banned
+words, the exact `mailto:` subject and body, the mailbox allowlist, the absence of a form or
+analytics, and metadata/JSON-LD alignment. If you intentionally change approved copy, update the
+assertion in the same commit so the guardrail keeps meaning something.
+
+`tests/screenshots/` is generated output and is gitignored.
+
 ## Before any deploy
 
+- Both test suites pass
 - Run the verification checklist in `README.md`
 - Confirm no new external network requests were introduced
 - Confirm no copy drifted into claiming traction the company does not have
