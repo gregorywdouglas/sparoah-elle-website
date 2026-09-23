@@ -255,6 +255,7 @@ const CONTRAST_SAMPLES = [
   ['.brand-copy small', '#fbf7ef'],
   ['.definition p:last-child', '#1b1715'],
   ['.definition .eyebrow', '#1b1715'],
+  ['blockquote', '#efe5d8'],
   ['.story-bridge', '#fbf7ef'],
   ['.quest-section .eyebrow', '#f2eade'],
   ['.section-heading.centered > p:last-child', '#f2eade'],

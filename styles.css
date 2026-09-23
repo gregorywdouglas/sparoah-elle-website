@@ -381,19 +381,29 @@ p { color: var(--ink-soft); }
 .story h2 { max-width: 580px; }
 .story-copy { max-width: 680px; }
 .story-copy p { font-size: var(--text-md); }
+/* Pull quote — a filled panel, not a rule with large type beside it. This is the
+   emotional centre of the origin story, so it carries the strongest treatment on
+   the page: a deeper fill and heavier bar than .story-bridge below it, and centred
+   text. Sized to sit on one line in the story column rather than at display scale,
+   which wrapped it across three lines and buried the sentence. */
 blockquote {
   margin: var(--space-xl) 0;
-  padding-left: var(--space-lg);
+  padding: var(--space-lg) var(--space-xl);
   color: var(--plum);
-  border-left: 3px solid var(--gold);
+  background: var(--sand);
+  border-left: 6px solid var(--gold-deep);
+  border-radius: 0 var(--radius-card) var(--radius-card) 0;
   font-family: var(--serif);
-  font-size: var(--display-3);
+  font-size: clamp(var(--text-lg), 2.6vw, var(--text-xl));
   font-style: italic;
-  letter-spacing: -.025em;
-  line-height: 1.1;
+  letter-spacing: -.02em;
+  line-height: 1.3;
+  text-align: center;
+  text-wrap: balance;
 }
 
-/* Restrained highlight — deliberately not the blockquote treatment, which is display-scale. */
+/* Restrained highlight — a lighter fill and a thinner bar than the pull quote
+   above it, so the two read as different levels of emphasis rather than a pair. */
 .story-bridge {
   margin: var(--space-xl) 0 0;
   padding: var(--space-lg);
@@ -867,7 +877,7 @@ blockquote {
   /* Without the chips the ring can shrink; the centre line needs the extra room. */
   .orbit-center { inset: 22%; }
   .definition { padding: var(--space-lg) 0; }
-  blockquote { padding-left: var(--space-md); }
+  blockquote { padding: var(--space-md); }
   .quest-card-copy, .quest-includes { padding: var(--space-lg); }
   .steps-grid { grid-template-columns: 1fr; }
   .steps-grid article { min-height: auto; }

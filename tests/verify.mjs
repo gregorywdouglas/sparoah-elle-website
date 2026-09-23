@@ -948,6 +948,27 @@ check('the brand mark reads at the weight of the wordmark', () => {
   return `seal ${stroke[1]}, favicon strokes ≥ 3 on a 64 grid`;
 });
 
+check('the founding quotation is a filled pull-quote panel', () => {
+  const rule = CSS_NO_COMMENTS.match(/\bblockquote\s*\{([^}]*)\}/);
+  assert(rule, 'the blockquote rule is missing');
+  const body = rule[1];
+  /* Approved 2026-09-23: the quotation has to read as a panel, not as a rule with
+     text beside it. Each of these is part of that treatment. */
+  for (const [label, pattern] of [
+    ['a filled background', /background:\s*var\(--sand\)/],
+    ['a heavy accent bar', /border-left:\s*[6-9]px solid var\(--gold-deep\)/],
+    ['centred text', /text-align:\s*center/],
+    ['italic serif', /font-style:\s*italic/],
+    ['the plum quotation colour', /color:\s*var\(--plum\)/],
+  ]) {
+    assert(pattern.test(body), `the pull quote lost ${label}`);
+  }
+  /* The panel needs breathing room on all four sides, not just a left indent. */
+  assert(!/padding-left:/.test(body), 'the pull quote is back to a left indent only');
+  assert(/padding:\s*var\(--space/.test(body), 'the pull quote has no panel padding');
+  return 'sand fill, gold-deep bar, centred italic plum';
+});
+
 check('supporting text uses the warm palette, not an off-palette grey', () => {
   assert(/--warm-muted:\s*#6b5a4a/.test(CSS), '--warm-muted is missing or changed');
   assert(!/#6f625d/.test(CSS_NO_COMMENTS), 'the cool grey #6f625d is still in use');
