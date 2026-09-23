@@ -274,10 +274,19 @@ const CONTRAST_SAMPLES = [
   ['.promise-list p', '#1b1715'],
   ['.founder .eyebrow', '#fffdf9'],
   ['.founder-card p', '#fffdf9'],
+  ['.quest-scope', '#f2eade'],
+  ['.faq .eyebrow', '#fffdf9'],
+  ['.faq-list h3', '#fbf7ef'],
+  ['.faq-list p', '#fbf7ef'],
   ['.cta-card .eyebrow', '#6d3546'],
   ['.cta-expectations', '#6d3546'],
   ['.cta-actions p', '#885c5c'],
+  /* Both sit in the actions column, under the card's pale radial highlight. */
+  ['.cta-next-label', '#885c5c'],
+  ['.cta-next li', '#885c5c'],
   ['.cta-fallback a', '#885c5c'],
+  ['.share-lead', '#fbf7ef'],
+  ['.share-link', '#fbf7ef'],
   ['.footer-links a', '#120f0e'],
   ['.footer-grid p', '#120f0e'],
 ];
@@ -351,8 +360,12 @@ try {
           journey: '.steps-grid article',
           contribution: '.service-callout h3',
           founder: '.founder-card p',
+          questScope: '.quest-scope',
+          faq: '.faq-list article',
           cta: '.cta-actions .button',
+          whatHappensNext: '.cta-next li',
           emailFallback: '.cta-fallback a',
+          shareLink: '.share-link',
           footer: '.site-footer',
         };
         for (const [k, sel] of Object.entries(want)) {
@@ -368,7 +381,9 @@ try {
       assert(missing.length === 0, `not rendered: ${missing.join(', ')}`);
       assert(r.components === 6, `expected 6 component cards, rendered ${r.components}`);
       assert(r.journey === 6, `expected 6 journey cards, rendered ${r.journey}`);
-      return `components ${r.components}, journey ${r.journey}, all sections visible`;
+      assert(r.faq === 6, `expected 6 FAQ cards, rendered ${r.faq}`);
+      assert(r.whatHappensNext === 3, `expected 3 next-step lines, rendered ${r.whatHappensNext}`);
+      return `components ${r.components}, journey ${r.journey}, FAQ ${r.faq}, all sections visible`;
     });
 
     await page.screenshot(join(SHOTS, `index-${vp.name}.png`));
@@ -688,17 +703,35 @@ try {
     return `${r.length} protective statements visible and wrapping at 320px`;
   });
 
-  await check('the visible email fallback has a 44px tap target', async () => {
-    const r = await page.eval(`(() => {
-      const a = document.querySelector('.cta-fallback a');
-      const r = a.getBoundingClientRect();
+  await check('the standalone text links have 44px tap targets', async () => {
+    const r = await page.eval(`(() => ['.cta-fallback a', '.share-link'].map((sel) => {
+      const a = document.querySelector(sel);
+      const box = a.getBoundingClientRect();
       const cs = getComputedStyle(a);
-      return { w: Math.round(r.width), h: Math.round(r.height), decoration: cs.textDecorationLine };
+      return {
+        sel, w: Math.round(box.width), h: Math.round(box.height),
+        decoration: cs.textDecorationLine,
+      };
+    }))()`);
+    for (const link of r) {
+      assert(link.h >= 44, `${link.sel} tap target is ${link.h}px tall, WCAG 2.5.8 asks for 44`);
+      assert(link.w >= 44, `${link.sel} tap target is ${link.w}px wide`);
+      assert(link.decoration.includes('underline'), `${link.sel} is signalled by colour alone`);
+    }
+    return r.map((l) => `${l.sel} ${l.w}×${l.h}px`).join(', ');
+  });
+
+  await check('the share link opens a draft with no recipient', async () => {
+    const r = await page.eval(`(() => {
+      const a = document.querySelector('.share-link');
+      const url = new URL(a.href);
+      return { scheme: url.protocol, to: url.pathname, subject: url.searchParams.get('subject'), body: url.searchParams.get('body') };
     })()`);
-    assert(r.h >= 44, `tap target is ${r.h}px tall, WCAG 2.5.8 asks for 44`);
-    assert(r.w >= 44, `tap target is ${r.w}px wide`);
-    assert(r.decoration.includes('underline'), 'link is signalled by colour alone');
-    return `${r.w}×${r.h}px, underlined`;
+    assert(r.scheme === 'mailto:', `scheme is ${r.scheme}`);
+    assert(r.to === '', `the share draft is pre-addressed to "${r.to}"`);
+    assert(r.body.includes('https://sparoahelle.com'), 'the share draft does not link the site');
+    assert(!/hello@|privacy@/.test(r.body), 'the share draft leaks a mailbox into a stranger\'s inbox');
+    return `empty recipient, ${r.body.length} character body`;
   });
 
   await check('text contrast meets WCAG AA', async () => {

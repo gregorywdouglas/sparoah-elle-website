@@ -970,6 +970,7 @@ Claude Code must not implement any of the following:
 
 ---
 
+
 ## 10. Expected file impact
 
 Claude Code must inspect the repository before assuming these filenames, but the likely changes are:

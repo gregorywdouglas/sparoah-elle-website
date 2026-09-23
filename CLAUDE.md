@@ -1,7 +1,18 @@
 # Sparoah Elle Website — Project Context
 
 Static one-page marketing site for `https://sparoahelle.com`. The live baseline is Version 1.2;
-the working tree carries the 2026-08-23 correction release, which is **not yet deployed**.
+the working tree carries the 2026-08-23 correction release and the 2026-09-22 review-handoff
+release, **neither of which is deployed**.
+
+The children's-privacy section in `privacy.html` was reviewed and approved by attorney Derrick
+Deyon, recorded 2026-09-22, so the hold marker is gone and `deploy.sh` runs. The gate itself
+stays: `deploy.sh` aborts on any `LEGAL-REVIEW-PENDING` comment in the markup. **Editing that
+approved wording voids the review** — re-add the marker beside the block and get it re-reviewed
+rather than shipping an edited version under the old approval. The disposition of
+the whole 2026-09-21 external review, including what was declined and why, is in
+`docs/reviews/2026-09-21-website-review-developer-handoff.md`. Do not re-litigate those refusals:
+the crown redraw, the Google Fonts swap, the sample-story lead magnet, the testimonial shell and
+the analytics check were each declined against a standing constraint.
 
 Two approved specifications govern current site copy, in this order:
 
@@ -56,6 +67,12 @@ not reintroduce a second presentation of the six steps anywhere else.
 Do not describe the Quest as a kit, box, workbook, printable, portal, app, live class, subscription,
 shipped product, facilitated session, or hybrid product. The final delivery format is undecided.
 
+Geography and shipping scope for the completion keepsake is `DEC-007` in `README.md`, tagged
+**PENDING PRODUCT LAUNCH** on 2026-09-22. It is not a pre-pilot blocker and does not need a site
+change: it is downstream of the undecided delivery format, and no shipping claim appears anywhere
+on the site. Do not raise it as outstanding work, and do not add shipping, region, or delivery
+copy to answer it. Revisit only when the delivery format itself is decided.
+
 ## Child identity (approved 2026-08-23)
 
 The child is **never named on the public site.** The origin story refers to her as
@@ -96,7 +113,7 @@ sentence — and that is now fixed. The guard fails on any future edit that rein
 
 ## Accessibility
 
-Maintain WCAG AA. Two colour values are load-bearing and were each set to fix a measured failure:
+Maintain WCAG AA. Three colour values are load-bearing and were each set to fix a measured failure:
 
 - `--gold-deep` is `#85602c` because the previous `#8f692f` measured 4.16:1 against the
   quest-section background, below the 4.5:1 minimum for small text.
@@ -105,8 +122,29 @@ Maintain WCAG AA. Two colour values are load-bearing and were each set to fix a 
   measures 4.0:1 against it. The email fallback link is white and underlined for the same reason:
   `--gold-pale` measures 4.05:1 there.
 
+- `.cta-next-label` is ivory, not `--gold-pale`. It sits in the same highlight, where gold
+  measures 4.0:1. Gold is fine on the card's darker left column (`.cta-card .eyebrow`, 6.5:1) —
+  the two are not interchangeable.
+
 Re-check contrast if you change any colour token, and re-run `node tests/browser.mjs`, which
-measures 32 text samples against the worst-case rendered background.
+measures 40 text samples against the worst-case rendered background.
+
+`--warm-muted` (`#6b5a4a`) replaced the off-palette cool grey `#6f625d` on the tagline and the
+trust line. It is a palette value, not a neutral — do not reintroduce a grey for muted text.
+
+## Design tokens
+
+Since 2026-09-22 `styles.css` carries a named scale for type, weight, spacing and radius, and
+`tests/verify.mjs` fails on any raw `font-size`, `font-weight` or `border-radius` outside it.
+Use a token or add one deliberately; do not reach for a one-off value.
+
+- **Type:** seven steps (`--text-xs` … `--text-2xl`), plus three fluid display sizes
+  (`--display-1/2/3`) redefined at the 620px breakpoint rather than overridden per rule. Fluid
+  sizes are `clamp()`s built from those tokens and a `vw` middle term.
+- **Weight:** three — `--weight-body` 400, `--weight-medium` 600, `--weight-bold` 700.
+- **Radius:** three — `--radius-pill`, `--radius-card`, `--radius-round`.
+- **Spacing:** 4px base, 8px grid from `--space-md` up. A few optical values stay raw and are
+  commented where they are (the `.includes-list` dot offsets, the menu-button geometry).
 
 ## Contact addresses
 

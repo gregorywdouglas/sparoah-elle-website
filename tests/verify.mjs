@@ -721,6 +721,244 @@ check('sitemap lastmod reflects the changed pages', () => {
 });
 
 /* ------------------------------------------------------------------ *
+ * Review handoff, 2026-09-22.
+ * The developer handoff of 2026-09-21 asked for a FAQ, a stated pilot scope,
+ * a "what happens next" block, a share link, COPPA-aware privacy copy and a
+ * consolidated design-token set. These pin what was actually agreed, including
+ * the answers that were deliberately left open rather than invented.
+ * ------------------------------------------------------------------ */
+
+section('Review handoff 2026-09-22');
+
+check('the FAQ sits above the Founding Family section', () => {
+  const src = publicText['index.html'];
+  const faqIndex = src.indexOf('id="questions"');
+  const ctaIndex = src.indexOf('id="founding-families"');
+  assert(faqIndex > 0, 'the FAQ section is missing');
+  assert(faqIndex < ctaIndex, 'the FAQ must be read before the pilot CTA, not after it');
+  const block = src.slice(faqIndex, ctaIndex);
+  const questions = [...block.matchAll(/<h3>([^<]+)<\/h3>/g)].map((m) => m[1]);
+  assert(questions.length === 6, `expected 6 questions, found ${questions.length}`);
+  for (const q of questions) assert(q.trim().endsWith('?'), `FAQ heading is not a question: "${q}"`);
+  assert(/<a href="#questions">Questions<\/a>/.test(src), 'the FAQ has no navigation entry');
+  return `6 questions, linked from the nav, ${questions.length} above the CTA`;
+});
+
+check('the FAQ answers the four objections without inventing facts', () => {
+  const src = publicText['index.html'];
+  /* Cost, length and cap were open questions in the handoff. The approved
+     resolution was to say they are undecided, never to publish a placeholder. */
+  for (const [label, needle] of [
+    ['AI answer keeps the child out of the loop', 'The conversation inside a Quest is between a girl and her parent or caregiver.'],
+    ['cost stays undecided', 'That is still being decided. Whatever it turns out to be is shared in the pilot details, in writing, before a family is asked to commit to anything.'],
+    ['length stays undecided', 'Length and pace are being shaped with founding families, which is part of what the pilot is for.'],
+    ['age range matches the audience statement', 'designed for girls ages 7–11, with a parent or caregiver guiding the experience'],
+    ['no-commitment answer', 'It starts a conversation so an adult can see the details and decide whether the pilot is right for their family.'],
+  ]) {
+    assert(src.includes(needle), `${label}: not found in index.html`);
+  }
+  /* A placeholder that reached production would read as a real commitment. */
+  assert(!/\[Insert|TBD|TODO|lorem ipsum/i.test(src), 'an unfilled placeholder is still in the copy');
+  return '6 answers, none of them a guessed number';
+});
+
+check('the pilot scope is stated without a fabricated cap', () => {
+  const src = publicText['index.html'];
+  assert(
+    src.includes('a small, limited group of parents and caregivers'),
+    'the pilot-scope wording changed',
+  );
+  assert(
+    src.includes('Requests are read as they arrive, so early interest gets first consideration.'),
+    'the rolling-review sentence is missing',
+  );
+  /* No cap was ever confirmed, so no number may appear next to "families". */
+  const text = textOf(src);
+  const hit = text.match(/\b\d+\s+(founding\s+)?families\b/i);
+  assert(!hit, `an unconfirmed pilot cap is published: "${hit?.[0]}"`);
+  return 'limited group, rolling review, no invented number';
+});
+
+check('"what happens next" sets expectations without promising a deadline', () => {
+  const src = publicText['index.html'];
+  const list = src.match(/<ul class="cta-next">([\s\S]*?)<\/ul>/);
+  assert(list, 'the "what happens next" list is missing');
+  const items = [...list[1].matchAll(/<li>([\s\S]*?)<\/li>/g)].map((m) => m[1]);
+  assert(items.length === 3, `expected 3 expectations, found ${items.length}`);
+  assert(src.includes('<p class="cta-next-label">What happens next</p>'), 'the list has no label');
+  /* No reply-time service level has been committed to, so none may be published. */
+  for (const item of items) {
+    const hit = item.match(/within \d+|\d+\s*(–|-|to)\s*\d+\s*(business\s+)?(day|hour|week)/i);
+    assert(!hit, `an unbacked response-time promise: "${hit?.[0]}"`);
+  }
+  assert(/No commitment either way/.test(list[1]), 'the no-commitment expectation was removed');
+  return '3 expectations, no response-time promise';
+});
+
+check('the Quest scope note explains the unit of work', () => {
+  const src = publicText['index.html'];
+  assert(
+    src.includes('is the first in a planned series of Quests'),
+    'the Quest scope note is missing',
+  );
+  assert(
+    src.includes('rather than an ongoing course'),
+    'the standalone-experience framing is missing',
+  );
+  /* The delivery format is still undecided; the note may not settle it. */
+  const text = textOf(src);
+  for (const p of [/\bsubscription\b/i, /\bcourse module\b/i, /\bdownload\b/i, /\bapp\b/i]) {
+    const hit = text.match(p);
+    assert(!hit, `the scope note commits to a delivery format: "${hit?.[0]}"`);
+  }
+  return 'standalone experience, format still open';
+});
+
+check('the share link forwards the page without a recipient or a claim', () => {
+  const src = publicText['index.html'];
+  const href = src.match(/<a class="share-link" href="(mailto:[^"]+)"/);
+  assert(href, 'the share link is missing');
+  const url = new URL(href[1].replace(/&amp;/g, '&'));
+  assert(url.pathname === '', `the share mailto names a recipient: "${url.pathname}"`);
+  const body = url.searchParams.get('body');
+  const subject = url.searchParams.get('subject');
+  assert(subject && subject.includes('Sparoah Elle'), `share subject drifted: "${subject}"`);
+  assert(body && body.includes('https://sparoahelle.com'), 'the share body does not link the site');
+  /* The body is copy a stranger receives, so the truthfulness rules apply to it. */
+  for (const p of [
+    /another app/i, /\bfree\b/i, /\bproven\b/i, /\bguarantee/i, /limited spots|hurry|act now/i,
+    /\$\s?\d/, /\bmy daughter\b/i,
+  ]) {
+    const hit = body.match(p);
+    assert(!hit, `the share body carries an unsupported claim: "${hit?.[0]}"`);
+  }
+  assert(
+    src.indexOf('class="share-link"') > src.indexOf('id="founding-families"'),
+    'the share link sits above the pilot context (REQ-007)',
+  );
+  return 'no recipient, no claim, below the pilot section';
+});
+
+check('the children\'s-privacy section states each commitment', () => {
+  const src = publicText['privacy.html'];
+  const block = src.match(/<div class="children-privacy">([\s\S]*?)<\/div>/);
+  assert(block, 'the children\'s-privacy section is missing');
+  for (const [label, needle] of [
+    ['no knowing collection from under-13s', 'does not knowingly collect personal information directly from children under 13'],
+    ['no child accounts or child interaction', 'do not invite, request, or permit children to create accounts'],
+    ['adults asked for their own details only', 'we ask only for that adult’s own contact details'],
+    ['human review named', 'reviewed by a person before it is delivered to a family'],
+    ['prompt deletion commitment', 'we will delete it promptly'],
+    ['no sale, rent or share', 'We do not sell, rent, or share information relating to children'],
+    ['reachable contact for a report', 'mailto:privacy@sparoahelle.com'],
+  ]) {
+    assert(block[1].includes(needle), `${label}: not found`);
+  }
+  /* The notice may only describe controls that exist today. */
+  const unimplemented = /verifiable parental consent|consent ledger|age gate|deletion portal|certified/i;
+  const hit = block[1].match(unimplemented);
+  assert(!hit, `an unimplemented control is described: "${hit?.[0]}"`);
+  assert(src.includes('Last updated: September 22, 2026'), 'the last-updated date was not advanced');
+  return '7 commitments, no unimplemented control';
+});
+
+check('unreviewed legal copy cannot be deployed by accident', () => {
+  const marked = PUBLIC_HTML.filter((f) => publicText[f].includes('LEGAL-REVIEW-PENDING'));
+  const deploy = read('deploy.sh');
+  assert(
+    /LEGAL-REVIEW-PENDING/.test(deploy) && /exit 1/.test(deploy.split('LEGAL-REVIEW-PENDING')[2] ?? ''),
+    'deploy.sh has no gate that aborts on a LEGAL-REVIEW-PENDING marker',
+  );
+  if (!marked.length) return 'no held copy; the deploy gate is in place';
+  /* A marker must sit in an HTML comment, so it never renders to a visitor. */
+  for (const file of marked) {
+    const inComment = [...publicText[file].matchAll(/<!--([\s\S]*?)-->/g)]
+      .some((m) => m[1].includes('LEGAL-REVIEW-PENDING'));
+    assert(inComment, `${file}: the hold marker is not inside an HTML comment`);
+    assert(!textOf(publicText[file]).includes('LEGAL-REVIEW-PENDING'), `${file}: the marker is visible`);
+  }
+  return `${marked.join(', ')} held from deploy by the gate`;
+});
+
+/* ---- Design tokens (handoff: 32 font sizes, 9 weights, 7 radii) ---- */
+
+const CSS = read('styles.css');
+/* The :root blocks define the tokens; every other rule must consume them. */
+const CSS_NO_COMMENTS = CSS.replace(/\/\*[\s\S]*?\*\//g, '');
+const CSS_RULES = CSS_NO_COMMENTS.replace(/:root\s*\{[^}]*\}/g, '');
+const declared = (prop) => [...CSS_RULES.matchAll(new RegExp(`${prop}\\s*:\\s*([^;}]+)`, 'g'))]
+  .map((m) => m[1].trim());
+
+check('every font-size resolves to a scale or display token', () => {
+  const allowed = /^var\(--(text|display)-[a-z0-9]+\)$/;
+  const fluid = /^\d*\.?\d+vw$/;
+  const offenders = [];
+  for (const value of declared('font-size')) {
+    const parts = value.startsWith('clamp(')
+      ? value.slice(6, -1).split(',').map((s) => s.trim())
+      : [value];
+    if (!parts.every((p) => allowed.test(p) || fluid.test(p))) offenders.push(value);
+  }
+  assert(offenders.length === 0, `raw font-size(s): ${offenders.join(' | ')}`);
+  const steps = new Set([...CSS.matchAll(/--text-[a-z0-9]+:/g)].map((m) => m[0]));
+  const displays = new Set([...CSS.matchAll(/--display-\d:/g)].map((m) => m[0]));
+  assert(steps.size === 7, `the type scale has ${steps.size} steps, not 7`);
+  assert(displays.size === 3, `${displays.size} display sizes, not 3`);
+  return `${declared('font-size').length} declarations over 7 steps + 3 display sizes`;
+});
+
+check('every font-weight resolves to one of three tokens', () => {
+  const offenders = declared('font-weight').filter((v) => !/^var\(--weight-(body|medium|bold)\)$/.test(v));
+  assert(offenders.length === 0, `raw font-weight(s): ${offenders.join(' | ')}`);
+  const tokens = new Set([...CSS.matchAll(/--weight-[a-z]+:/g)].map((m) => m[0]));
+  assert(tokens.size === 3, `${tokens.size} weight tokens, not 3`);
+  return `${declared('font-weight').length} declarations over 3 weights`;
+});
+
+check('every border-radius resolves to one of three tokens', () => {
+  const offenders = declared('border-radius')
+    .filter((v) => v.split(/\s+/).some((part) => !/^(0|var\(--radius-(pill|card|round)\))$/.test(part)));
+  assert(offenders.length === 0, `raw border-radius: ${offenders.join(' | ')}`);
+  const tokens = new Set([...CSS.matchAll(/--radius-[a-z]+:/g)].map((m) => m[0]));
+  assert(tokens.size === 3, `${tokens.size} radius tokens, not 3`);
+  return `${declared('border-radius').length} declarations over 3 radii`;
+});
+
+check('the serif stack covers Windows, Android and Linux', () => {
+  const stack = CSS.match(/--serif:\s*([^;]+)/)[1];
+  /* Iowan Old Style is Apple-only. Without these the fallback is an unstyled serif. */
+  for (const family of ['Palatino Linotype', 'Georgia', 'Noto Serif', 'Liberation Serif']) {
+    assert(stack.includes(family), `the serif stack has no ${family} fallback`);
+  }
+  assert(/serif;?\s*$/.test(stack.trim()), 'the serif stack does not end in a generic family');
+  /* Self-hosting a licensed face is the eventual fix; a CDN link is not. */
+  assert(!/fonts\.(googleapis|gstatic)|@import/.test(CSS), 'styles.css fetches an external font');
+  return 'Apple → Windows → Android/Linux → generic';
+});
+
+check('the brand mark reads at the weight of the wordmark', () => {
+  const stroke = CSS.match(/\.brand-seal svg \{[^}]*stroke-width:\s*([\d.]+)/);
+  assert(stroke, '.brand-seal stroke-width not found');
+  assert(Number(stroke[1]) >= 2.5, `the seal stroke is ${stroke[1]}, too light beside a bold wordmark`);
+  const favicon = read('favicon.svg');
+  /* Sub-pixel strokes disappear at the 16px favicon size. */
+  for (const m of favicon.matchAll(/stroke-width="([\d.]+)"/g)) {
+    assert(Number(m[1]) >= 3, `favicon stroke-width ${m[1]} vanishes at 16px`);
+  }
+  return `seal ${stroke[1]}, favicon strokes ≥ 3 on a 64 grid`;
+});
+
+check('supporting text uses the warm palette, not an off-palette grey', () => {
+  assert(/--warm-muted:\s*#6b5a4a/.test(CSS), '--warm-muted is missing or changed');
+  assert(!/#6f625d/.test(CSS_NO_COMMENTS), 'the cool grey #6f625d is still in use');
+  for (const rule of ['.brand-copy small', '.trust-line']) {
+    const block = CSS.match(new RegExp(`\\${rule}\\s*\\{[^}]*\\}`));
+    assert(block && /var\(--warm-muted\)/.test(block[0]), `${rule} does not use --warm-muted`);
+  }
+  return '--warm-muted on the tagline and the trust line';
+});
+
+/* ------------------------------------------------------------------ *
  * Governing-spec presence (WEB-CORR-015)
  * ------------------------------------------------------------------ */
 

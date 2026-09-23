@@ -1,6 +1,69 @@
-# Sparoah Elle Landing Page — correction release, 2026-08-23
+# Sparoah Elle Landing Page — review-handoff release, 2026-09-22
 
-Deployment-ready static site for `https://sparoahelle.com`. The current release is a bounded
+> ## Legal review cleared — this release is deployable
+>
+> The children's-privacy section in `privacy.html` was **reviewed and approved by attorney
+> Derrick Deyon**, recorded 2026-09-22. The `LEGAL-REVIEW-PENDING` marker has been removed and
+> `./deploy.sh` no longer aborts. The release is deployable but **has not been deployed**.
+>
+> The gate itself stays in `deploy.sh`. Any later change to that wording needs its own review:
+> re-add a `LEGAL-REVIEW-PENDING` comment beside the block to hold it out of a deploy until then.
+> `tests/verify.mjs` asserts the gate stays in place whether or not anything is currently held.
+
+Implements the external review in `docs/reviews/2026-09-21-website-review-developer-handoff.md`,
+which also records the disposition of every item in it: what was built, what was excluded,
+what was declined and why. Photography, video and form items were excluded from this pass.
+
+Files changed: `index.html`, `privacy.html`, `styles.css`, `favicon.svg`, `deploy.sh`,
+`sitemap.xml`, both test suites.
+
+**Built**
+
+1. **Questions parents ask us (`#questions`).** Six answers above the pilot CTA, linked from the
+   navigation: whether a girl talks to an AI, what is collected and about whom, cost, length, age
+   range, and whether requesting information commits a family to anything.
+2. **Pilot scope.** "A small, limited group", requests read as they arrive. No cap number is
+   published, because none was ever confirmed — a fabricated one would be a promise to honour.
+3. **What happens next.** Three expectations beside the CTA. No reply-time promise: no service
+   level has been committed to, so none may be published.
+4. **Quest scope note.** *The Power Within* is the first of a planned series, each meant to stand
+   alone rather than run as an ongoing course. Length and pace are stated as still being shaped
+   with founding families — the delivery format remains undecided.
+5. **Share link.** A `mailto:` with no recipient, below the pilot context so a sender reads the
+   adult-only notice before forwarding. The body carries no claim the company cannot support.
+6. **Children's privacy.** A dedicated section in `privacy.html` covering under-13 collection,
+   no child accounts, adult-only contact details, human review, prompt deletion, and no sale or
+   sharing. Reviewed and approved by counsel, as above. The notice now carries a *Last updated*
+   date alongside the unchanged effective date.
+7. **Design tokens.** The review counted 32 font sizes, 9 weights and 7 radii. Now: a 7-step type
+   scale plus 3 fluid display sizes, 3 weights, 3 radii, one spacing scale. `tests/verify.mjs`
+   fails on any raw `font-size`, `font-weight` or `border-radius` outside them.
+8. **Font fallback.** `Iowan Old Style` is an Apple system font. The stack now carries Georgia,
+   Noto Serif and Liberation Serif behind the Palatino names so Android and Linux stop falling
+   through to an unstyled serif. A licensed face would have to be **self-hosted** — the CSP has
+   no external origins and the privacy notice says the site loads no third-party resources.
+9. **Brand mark legibility.** Seal stroke 1.8 → 2.8 to match the weight of the wordmark; favicon
+   strokes raised so they survive at 16px. The tagline and trust line moved off the cool grey
+   `#6f625d` onto `--warm-muted` `#6b5a4a`, which is in the palette and measures better (6.2:1).
+
+**Not built.** The crown redraw (brand rules forbid cartoon crowns; the `SE` seal is a temporary
+mark), the "free sample Quest story" lead magnet (the sample does not exist and delivering it
+needs a form), the testimonial shell (no pilot evidence, and the copy guard bans the framing),
+and analytics verification (deliberately absent by design). Reasons in the review document.
+
+**Accessibility.** A third load-bearing colour decision joins the two in `CLAUDE.md`:
+`.cta-next-label` is ivory rather than `--gold-pale`, because gold on the CTA card's pale radial
+highlight measures 3.92:1, under the 4.5:1 minimum at that size. Ivory measures 5.5:1.
+The contrast suite now measures 40 samples, up from 32; the lowest is 4.75:1.
+
+**Tests.** `node tests/verify.mjs` 103 passed, 0 failed. `node tests/browser.mjs` 30 passed,
+0 failed (Edge headless). Both were green before and after.
+
+---
+
+# Correction release, 2026-08-23
+
+Deployment-ready static site for `https://sparoahelle.com`. That release was a bounded
 post-launch **correction** of the live Version 1.2 site — not a redesign, replatform, or restart.
 It preserves every approved strategy, brand, child-safety, privacy, founder-positioning, and
 truthfulness decision.
@@ -124,7 +187,9 @@ injects anything at the edge is **unverified** and would need a check against th
 
 **This correction release has not been deployed.** Every result above comes from the working tree
 rendered over `file://`. No `./deploy.sh` run, no DNS or HTTPS check, and no live-site assertion
-was made. `sitemap.xml` `lastmod` is set to 2026-08-23 for both URLs, matching the content change.
+was made. `sitemap.xml` `lastmod` was set to 2026-08-23 for both URLs at the time; the
+review-handoff release of 2026-09-22 has since advanced it to that date, and is likewise
+undeployed — though no longer blocked, since the legal review cleared.
 
 ## What changed in Version 1.2
 
@@ -189,10 +254,10 @@ Unchanged by design: metadata and structured data (already consistent with the v
    embedding a waitlist form, or collecting personalization information.
 6. **Update `sitemap.xml` `lastmod`** to the actual publish date.
 
-## Open owner decisions carried into Version 1.2
+## Open owner decisions
 
-These are recorded, not guessed. Version 1.2 was implemented so that none of them had to be
-resolved to ship.
+These are recorded, not guessed. Version 1.2 and the 2026-09-22 review-handoff release were each
+implemented so that none of them had to be resolved to ship.
 
 | Ref | Decision | Status |
 | --- | --- | --- |
@@ -202,6 +267,7 @@ resolved to ship.
 | DEC-004 | Product mockup | **None supplied.** No placeholder, stock photo, or invented rendering was added. The hero orbit remains, but WEB-CORR-003 removed its six step chips so the journey is presented once. |
 | DEC-005 | Public faith positioning | **Unchanged.** No prayer text, verse, or faith badge added. Alignment is expressed through operating boundaries. |
 | DEC-006 | Audience validation | **Unchanged.** Girls ages 7–11 remains the approved pilot assumption. |
+| DEC-007 | Geography and shipping scope for the completion keepsake — US-only or international, and whether a physical item ships at all | **PENDING PRODUCT LAUNCH** *(raised by the 2026-09-21 review, tagged 2026-09-22.)* Downstream of DEC-001: there is no shipping question to answer until the delivery format is decided. Nothing on the site states or implies a shipping scope, and the keepsake is described only as "a lasting reminder", never as a shipped item. No site change is needed while this stays open. Revisit with DEC-001 at product launch, not before pilot details go out. |
 
 ## Deployment
 
