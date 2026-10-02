@@ -406,8 +406,14 @@ const REQUIRED_INDEX = [
   ['direct-marketing copy', 'We market to adults, not to children.'],
   ['participation copy', 'Parents and caregivers decide whether and how a child participates.'],
   ['child-account language preserved', 'do not invite children to create accounts on this site'],
-  ['founder paragraph one', 'Sparoah Elle was founded by Gregory Douglas, an enterprise technology architect with more than 25 years of experience designing complex systems and turning ideas into disciplined execution.'],
-  ['founder paragraph two keeps Gregory the subject', 'He brings that same discipline to a more personal mission'],
+  /* Founder section, founder-approved 2026-10-02 (Origin Story spec, Amendment 2026-10-02).
+     Editing this wording voids that approval. */
+  ['founder headline', '<h2>A father’s attention. A daughter’s spark. A shared purpose.</h2>'],
+  ['founder paragraph one', 'Sparoah Elle began with Gregory Douglas’s daughter on his shoulders, arms raised high, announcing that she was queen of the world. He paid attention, and made it his job to help her feel that way all the time: not just special, but safe enough to believe it.'],
+  ['founder paragraph two', 'One summer, she told him she had decided to start her own business. He was thrilled and said they could build it together, but before he could say anything more, she stopped him. She had thought of it all by herself, she said. “That’s because I have the same mind as you.”'],
+  ['founder paragraph three', 'That moment showed him what a girl does when she feels safe and seen: she claims her own ideas.'],
+  ['founder paragraph four', 'He had seen that belief before, in his older daughter, now grown. She has never stopped believing she can do whatever she sets out to do, and then doing it. A serial entrepreneur, she has built ventures in real estate, beauty, and fitness, and she’s now earning her MBA.'],
+  ['founder paragraph five keeps Gregory the subject', 'Today he brings that same attention, along with more than 25 years as an enterprise technology architect, to a deeply personal mission: creating safe, thoughtful experiences that help girls explore what they can build and who they can bless, and building something worthy of a child’s trust and a family’s time.'],
   ['navigation label', '>Founding Family Pilot</a>'],
   ['enrollment-implying copy replaced', 'Requesting information does not guarantee selection or enroll a child.'],
   ['own-contact-information notice', 'Please provide only your own contact information.'],
@@ -637,8 +643,10 @@ check('the child is never named in a deployable file', () => {
 check('the origin story keeps third-person narration', () => {
   const src = publicText['index.html'];
   assert(!/\bmy daughter\b/i.test(src), '"my daughter" would switch the section to first person');
+  /* The daughter's approved founder-section quotation is her speech, not narration. */
+  const narration = textOf(src).split('“That’s because I have the same mind as you.”').join(' ');
   for (const p of [/\bI (am|was|have|built|created|founded)\b/, /\bmy (child|family|company|wife)\b/i]) {
-    const hit = textOf(src).match(p);
+    const hit = narration.match(p);
     /* The mailto body is adult-authored first person by design; the page copy is not. */
     assert(!hit, `first-person narration in page copy: "${hit?.[0]}"`);
   }
@@ -695,11 +703,18 @@ check('no child-identifying information sits in metadata, JSON-LD, alt text or a
 });
 
 check('the child is not presented as founder, operator or spokesperson', () => {
-  const text = textOf(publicText['index.html']);
+  const src = publicText['index.html'];
+  const text = textOf(src);
+  /* Since 2026-10-02 the visible "founded by" sentence is retired; adult-founder
+     positioning rests on the founder section and the structured data. */
+  const founder = textOf(src.match(/<section class="section founder">([\s\S]*?)<\/section>/)?.[1] ?? '');
+  assert(/Gregory Douglas/.test(founder), 'the founder section no longer names Gregory Douglas');
   assert(
-    /Sparoah Elle was founded by Gregory Douglas/.test(text),
-    'the adult founder statement changed',
+    /\bhe brings that same attention, along with more than 25 years as an enterprise technology architect/i.test(founder),
+    'the founder section no longer presents Gregory as the experienced adult behind the company',
   );
+  const ld = JSON.parse(src.match(/application\/ld\+json[^>]*>([\s\S]*?)<\/script>/)[1]);
+  assert(ld.founder?.name === 'Gregory Douglas', 'JSON-LD founder is not Gregory Douglas');
   for (const p of [
     /daughter (is|as) (the )?(founder|ceo|owner|operator|president|spokesperson)/i,
     /(founded|owned|operated|run|led) by (his |a |the )?(daughter|child|girl)/i,
