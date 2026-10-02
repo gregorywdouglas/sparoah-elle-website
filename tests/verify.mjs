@@ -580,7 +580,9 @@ check('no unsupported business claim is introduced', () => {
 
 check('metadata and structured data are aligned', () => {
   const src = publicText['index.html'];
-  const DESCRIPTION = 'Parent-led Quest experiences for girls ages 7–11 that help families explore ideas through conversation, creation, reflection, meaningful action, and service.';
+  /* Approved 2026-10-02. One string for every description channel on every page,
+     including the JSON-LD slogan; supersedes the WEB-CORR-012 description. */
+  const DESCRIPTION = 'Sparoah Elle is building parent-led Quest experiences for girls ages 7 to 11, designed with safety and privacy first. Founded by Gregory Douglas.';
   const SOCIAL_TITLE = 'Sparoah Elle | Every Quest builds the Queen within';
   const meta = (re) => (src.match(re) || [, null])[1];
 
@@ -602,6 +604,11 @@ check('metadata and structured data are aligned', () => {
   }
   const ld = JSON.parse(src.match(/application\/ld\+json[^>]*>([\s\S]*?)<\/script>/)[1]);
   assert(ld.description === DESCRIPTION, 'JSON-LD description not aligned');
+  assert(ld.slogan === DESCRIPTION, 'JSON-LD slogan not aligned');
+  for (const file of ['privacy.html', '404.html']) {
+    const own = (publicText[file].match(/<meta name="description" content="([^"]*)"/) || [, null])[1];
+    assert(own === DESCRIPTION, `${file}: meta description not aligned`);
+  }
   assert(ld.url === 'https://sparoahelle.com/', 'JSON-LD url changed');
   assert(ld.founder?.name === 'Gregory Douglas', 'JSON-LD founder changed');
   return 'title, OG, X/Twitter and JSON-LD consistent';
