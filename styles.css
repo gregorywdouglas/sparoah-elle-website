@@ -662,6 +662,18 @@ blockquote {
 .founder-card h2 { max-width: 840px; margin-bottom: var(--space-lg); }
 .founder-card p { max-width: 800px; font-size: var(--text-base); }
 .founder-card p:last-child { margin-bottom: 0; }
+/* Pull line: breaks five paragraphs of prose without a second filled panel —
+   the origin-story blockquote is the page's one panel. Wording unchanged. */
+.founder-card .founder-pull {
+  margin: var(--space-xl) 0;
+  padding-left: var(--space-md);
+  color: var(--plum);
+  border-left: 3px solid var(--gold-deep);
+  font-family: var(--serif);
+  font-size: clamp(var(--text-md), 2vw, var(--text-lg));
+  font-style: italic;
+  line-height: 1.4;
+}
 
 .cta-section { padding: 0 0 var(--space-4xl); background: var(--ivory); }
 .cta-card {

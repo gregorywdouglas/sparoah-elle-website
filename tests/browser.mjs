@@ -275,6 +275,7 @@ const CONTRAST_SAMPLES = [
   ['.promise-list p', '#1b1715'],
   ['.founder .eyebrow', '#fffdf9'],
   ['.founder-card p', '#fffdf9'],
+  ['.founder-pull', '#fffdf9'],
   ['.quest-scope', '#f2eade'],
   ['.faq .eyebrow', '#fffdf9'],
   ['.faq-list h3', '#fbf7ef'],
