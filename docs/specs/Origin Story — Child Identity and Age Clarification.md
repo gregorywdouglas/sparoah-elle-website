@@ -145,3 +145,37 @@ Do not alter:
 - The insight that girls often carry ideas before adults create intentional space to explore them
 - Gregory Douglas’s adult-founder positioning
 - The principle that the brand should not depend on the child’s image, identity, or continuing public participation
+
+---
+
+### Amendment 2026-10-02 — Founder section
+
+**Status:** Approved by the founder, Gregory Douglas, 2026-10-02.
+
+The founder section (“Built with legacy in mind”) now carries founder-approved copy: the headline
+*“A father’s attention. A daughter’s spark. A shared purpose.”* and five paragraphs. This is a
+single, bounded exception to the “additional biographical details” and “behavioral or family
+information” rules above. It covers only the founder-section wording, verbatim:
+
+- The moment on his shoulders, announcing she was “queen of the world”.
+- The summer she said she had decided to start her own business, and the quotation
+  **“That’s because I have the same mind as you.”**
+- Paragraph four, about Gregory’s older daughter. She is an adult and has consented to its
+  publication (confirmed 2026-10-02).
+
+Everything else in this specification still applies everywhere, including the founder section:
+
+- The child is still never named, and the site still gives no current age, birth date, school,
+  location, photograph, schedule, or contact information.
+- Nothing about her goes into metadata, JSON-LD, alt text, comments, or asset names.
+- No recurring content is built around her ambitions.
+
+The origin-story passage and its quotation **“Because I want to start my own company.”** are
+unchanged.
+
+The visible sentence “Sparoah Elle was founded by Gregory Douglas” was retired with the old
+founder copy. Gregory’s adult-founder positioning now rests on the founder section, the meta
+description (“Founded by Gregory Douglas.”), and the JSON-LD `founder`.
+
+Editing the founder-section wording voids this approval. Re-approve it before shipping a change.
+`tests/verify.mjs` pins the headline and all five paragraphs exactly.

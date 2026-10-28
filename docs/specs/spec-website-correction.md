@@ -755,6 +755,18 @@ Use this exact description consistently for:
 Parent-led Quest experiences for girls ages 7–11 that help families explore ideas through conversation, creation, reflection, meaningful action, and service.
 ```
 
+> **Superseded 2026-10-02.** The description above stated an outcome the product has not
+> delivered ("help families explore…") and is retained for traceability only — do not restore it.
+> Every description channel now uses this exact string:
+>
+> ```text
+> Sparoah Elle is building parent-led Quest experiences for girls ages 7 to 11, designed with safety and privacy first. Founded by Gregory Douglas.
+> ```
+>
+> Scope widened at the same time: besides the four channels listed above, it also replaces the
+> Organization JSON-LD `slogan` and the `<meta name="description">` on `privacy.html` and
+> `404.html`. Titles, `og:image:alt`/`twitter:image:alt`, and visible copy are unchanged.
+
 ### Preserve
 
 - Canonical homepage URL:

@@ -95,6 +95,12 @@ identity becoming a public business asset, and the site must not confirm that th
   belongs on Gregory's founder journey, parent insight, building the Quest, protection by design,
   stewardship and service, and verified pilot evidence.
 - Every use of **Sparoah Elle** as the company and brand name is preserved and unaffected.
+- **One exception, approved 2026-10-02:** the founder section ("Built with legacy in mind")
+  carries founder-approved copy with additional detail about her and about Gregory's older
+  daughter. The older daughter is an adult and consented to its publication. The exception covers
+  that wording only, and the rules above still apply everywhere else, including the founder
+  section. Do not reword the section; editing it voids the approval. See the 2026-10-02
+  amendment in the Origin Story spec.
 
 `tests/verify.mjs` enforces this: **every occurrence of "Sparoah" in a deployable file must be part
 of the brand name.** As of 2026-08-23 the child was named in exactly one place — the origin-story
