@@ -4,7 +4,7 @@
 >
 > The children's-privacy section in `privacy.html` was **reviewed and approved by attorney
 > Derrick Deyon**, recorded 2026-09-22. The `LEGAL-REVIEW-PENDING` marker has been removed and
-> `./deploy.sh` no longer aborts. The release is deployable but **has not been deployed**.
+> `./deploy.sh` no longer aborts. The release **was deployed on 2026-10-27** — see *Deployed* below.
 >
 > The gate itself stays in `deploy.sh`. Any later change to that wording needs its own review:
 > re-add a `LEGAL-REVIEW-PENDING` comment beside the block to hold it out of a deploy until then.
@@ -180,16 +180,19 @@ meet AA, lowest **4.75:1**; no console errors on either page.
 ### Scope of the analytics verification
 
 `tests/verify.mjs` proves the **repository** ships no tracking code, and the CSP is
-`default-src 'self'`. It cannot prove anything about the host. Whether Azure Static Web Apps
-injects anything at the edge is **unverified** and would need a check against the live response.
+`default-src 'self'`. It cannot prove anything about the host. On 2026-10-27 the live
+`/` and `/privacy.html` responses were byte-identical to the repository files (line endings
+aside), so the host injected nothing into the HTML at that check.
 
-### Not deployed
+### Deployed
 
-**This correction release has not been deployed.** Every result above comes from the working tree
-rendered over `file://`. No `./deploy.sh` run, no DNS or HTTPS check, and no live-site assertion
-was made. `sitemap.xml` `lastmod` was set to 2026-08-23 for both URLs at the time; the
-review-handoff release of 2026-09-22 has since advanced it to that date, and is likewise
-undeployed — though no longer blocked, since the legal review cleared.
+The 2026-08-23 correction release, the 2026-09-22 review-handoff release, the 2026-10-02 founder
+section and the 2026-10-27 wording fixes went live together on **2026-10-27**, via `./deploy.sh`
+from `main` at merge commit `680d4b1`. Both test suites passed on that commit first. After the
+deploy, `https://sparoahelle.com/` and `/privacy.html` returned 200 with the new copy, the CSP
+header was `default-src 'self'` with no external origins, and `sitemap.xml` `lastmod` read
+2026-10-27 for both URLs. The `README.md` verification checklist was not walked item by item for
+this deploy.
 
 ## What changed in Version 1.2
 
