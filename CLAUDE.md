@@ -1,8 +1,9 @@
 # Sparoah Elle Website — Project Context
 
-Static one-page marketing site for `https://sparoahelle.com`. The live baseline is Version 1.2;
-the working tree carries the 2026-08-23 correction release and the 2026-09-22 review-handoff
-release, **neither of which is deployed**.
+Static one-page marketing site for `https://sparoahelle.com`. `main` is live: the 2026-08-23
+correction release, the 2026-09-22 review-handoff release, the 2026-10-02 founder section and the
+2026-10-27 wording fixes were deployed together on 2026-10-27 from merge commit `680d4b1`,
+replacing Version 1.2.
 
 The children's-privacy section in `privacy.html` was reviewed and approved by attorney Derrick
 Deyon, recorded 2026-09-22, so the hold marker is gone and `deploy.sh` runs. The gate itself
