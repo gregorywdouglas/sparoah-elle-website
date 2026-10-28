@@ -19,3 +19,6 @@ Thumbs.db
 
 # Node (only if tooling is added later)
 node_modules/
+
+# Test artefacts — regenerate with `node tests/browser.mjs`
+tests/screenshots/

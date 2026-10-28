@@ -27,6 +27,15 @@ if grep -n 'style="' -- *.html; then
   exit 1
 fi
 
+# Legal hold. A marked block is copy that has not cleared outside review; publishing
+# it is a legal decision, not a deployment decision. Remove the marker comment only
+# after the review, never to unblock a deploy.
+if grep -n 'LEGAL-REVIEW-PENDING' -- *.html; then
+  echo "A LEGAL-REVIEW-PENDING block is still in the markup (see above)." >&2
+  echo "Have counsel review that copy, then delete the marker comment. Aborting." >&2
+  exit 1
+fi
+
 # Everything published to the web root, listed explicitly. Anything absent from
 # this list stays private. Deploying the folder wholesale would publish CLAUDE.md,
 # README.md, and docs/specs/adult-intake.md at their own URLs.
