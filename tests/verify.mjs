@@ -392,7 +392,7 @@ const REQUIRED_INDEX = [
   ['founding insight transition preserved', 'That answer revealed something bigger. Girls often carry ideas long before adults create intentional space for them to explore those ideas.'],
   ['brand name still closes the transition', 'Sparoah Elle was created to help families make that space—together.'],
   ['product description', 'designed to help a girl explore an idea she cares about, bring it to life, and discover how her gifts can make a difference.'],
-  ['shared-path sentence', 'Each Quest is designed to give a parent and girl a clear path to read, talk, imagine, create, reflect, and serve together.'],
+  ['pilot interest-list sentence', 'If you email us, we’ll add you to the list and send the full details in writing once they’re set. Nothing is asked of you until you’ve read them and decided.'],
   ['planned-components qualification', 'These components are planned for the Founding Family Pilot and may be refined through family feedback.'],
   ['keepsake reads "lasting"', 'A lasting reminder that her ideas, voice, effort, and contribution matter.'],
   ['"What your family receives"', 'What your family receives'],
@@ -402,7 +402,8 @@ const REQUIRED_INDEX = [
   ['contribution paragraph', 'Every Quest moves from idea to action to contribution.'],
   ['family-promise heading preserved', 'Childhood should be protected while possibility is expanded.'],
   ['AI-companion boundary preserved', 'Children are not handed over to an open-ended AI companion.'],
-  ['human review names a person', 'reviewed by a person'],
+  ['human review names a person', 'a person will review it'],
+  ['AI cannot approve personalized material', 'AI can help prepare it, but it can’t approve it.'],
   ['direct-marketing copy', 'We market to adults, not to children.'],
   ['participation copy', 'Parents and caregivers decide whether and how a child participates.'],
   ['child-account language preserved', 'do not invite children to create accounts on this site'],
@@ -420,7 +421,7 @@ const REQUIRED_INDEX = [
   ['adults-only notice', 'Adults only. Please do not email personal information about a child.'],
   ['reply expectation microcopy', 'We’ll reply with adult-only pilot details and next steps. No child information is needed at this stage.'],
   ['visible email fallback', 'Or email us directly at <a href="mailto:hello@sparoahelle.com">hello@sparoahelle.com</a>.'],
-  ['status badge preserved', 'Founding Family Pilot — Now Forming'],
+  ['status badge preserved', 'Founding Family Pilot — Interest list open'],
   ['tagline preserved', 'Every Quest builds the Queen within.'],
   ['audience preserved', 'Parent-led Quest experiences for girls ages 7–11'],
 ];
@@ -772,9 +773,9 @@ check('the FAQ answers the four objections without inventing facts', () => {
      resolution was to say they are undecided, never to publish a placeholder. */
   for (const [label, needle] of [
     ['AI answer keeps the child out of the loop', 'The conversation inside a Quest is between a girl and her parent or caregiver.'],
-    ['cost stays undecided', 'That is still being decided. Whatever it turns out to be is shared in the pilot details, in writing, before a family is asked to commit to anything.'],
-    ['length stays undecided', 'Length and pace are being shaped with founding families, which is part of what the pilot is for.'],
-    ['age range matches the audience statement', 'designed for girls ages 7–11, with a parent or caregiver guiding the experience'],
+    ['cost stays undecided', 'We haven’t set it yet. You’ll get the cost in writing before you’re asked to commit to anything.'],
+    ['length stays undecided', 'We’re shaping the length and pace with our founding families. We’ll tell you the expected time before you start.'],
+    ['age range matches the audience statement', 'for girls about 7–11, and testing which ages it suits best with our founding families'],
     ['no-commitment answer', 'It starts a conversation so an adult can see the details and decide whether the pilot is right for their family.'],
   ]) {
     assert(src.includes(needle), `${label}: not found in index.html`);
@@ -820,11 +821,11 @@ check('"what happens next" sets expectations without promising a deadline', () =
 check('the Quest scope note explains the unit of work', () => {
   const src = publicText['index.html'];
   assert(
-    src.includes('is the first in a planned series of Quests'),
+    src.includes('is our first Quest: one complete family experience'),
     'the Quest scope note is missing',
   );
   assert(
-    src.includes('rather than an ongoing course'),
+    src.includes('with a beginning and an end'),
     'the standalone-experience framing is missing',
   );
   /* The delivery format is still undecided; the note may not settle it. */
@@ -880,7 +881,11 @@ check('the children\'s-privacy section states each commitment', () => {
   const unimplemented = /verifiable parental consent|consent ledger|age gate|deletion portal|certified/i;
   const hit = block[1].match(unimplemented);
   assert(!hit, `an unimplemented control is described: "${hit?.[0]}"`);
-  assert(src.includes('Last updated: September 22, 2026'), 'the last-updated date was not advanced');
+  assert(src.includes('Last updated: October 27, 2026'), 'the last-updated date was not advanced');
+  assert(
+    src.includes('keep an adult who asks on our Founding Family interest list'),
+    'the interest list the pilot banner promises is not disclosed',
+  );
   return '7 commitments, no unimplemented control';
 });
 
