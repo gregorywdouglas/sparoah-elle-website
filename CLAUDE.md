@@ -1,9 +1,16 @@
 # Sparoah Elle Website — Project Context
 
-Static one-page marketing site for `https://sparoahelle.com`. `main` is live: the 2026-08-23
+Static one-page marketing site for `https://sparoahelle.com`. `main` is live. The 2026-08-23
 correction release, the 2026-09-22 review-handoff release, the 2026-10-02 founder section and the
-2026-10-27 wording fixes were deployed together on 2026-10-27 from merge commit `680d4b1`,
-replacing Version 1.2.
+2026-10-27 wording fixes were first deployed together on 2026-10-27 from merge commit `680d4b1`,
+replacing Version 1.2. Four more deploys followed on 2026-10-30 (pre-test copy fixes, Our Story in
+the founder's voice, the sitemap date, and "about 7–11" everywhere); the latest live commit is
+`4651814`. See *Deployed* in `README.md` for each one.
+
+Not yet live, on purpose: the privacy-notice personalization sentence (pre-test item A4), which
+sits inside the attorney-approved children's-privacy block and waits for counsel; and the $29
+founding-family pre-order copy (Part B), which waits for the founder's delivery date, sample link,
+payment provider and refund window.
 
 The children's-privacy section in `privacy.html` was reviewed and approved by attorney Derrick
 Deyon, recorded 2026-09-22, so the hold marker is gone and `deploy.sh` runs. The gate itself
