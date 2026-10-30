@@ -774,8 +774,8 @@ check('the FAQ answers the four objections without inventing facts', () => {
   for (const [label, needle] of [
     ['AI answer keeps the child out of the loop', 'The conversation inside a Quest is between a girl and her parent or caregiver.'],
     ['cost stays undecided', 'We haven’t set it yet. You’ll get the cost in writing before you’re asked to commit to anything.'],
-    ['length stays undecided', 'We’re shaping the length and pace with our founding families. We’ll tell you the expected time before you start.'],
-    ['age range matches the audience statement', 'for girls about 7–11, and testing which ages it suits best with our founding families'],
+    ['length stays undecided', 'We’ll shape the length and pace with our founding families. We’ll tell you the expected time before you start.'],
+    ['age range matches the audience statement', 'for girls about 7–11, and we’ll test which ages it suits best with our founding families'],
     ['no-commitment answer', 'It starts a conversation so an adult can see the details and decide whether the pilot is right for their family.'],
   ]) {
     assert(src.includes(needle), `${label}: not found in index.html`);
@@ -792,7 +792,7 @@ check('the pilot scope is stated without a fabricated cap', () => {
     'the pilot-scope wording changed',
   );
   assert(
-    src.includes('Requests are read as they arrive, so early interest gets first consideration.'),
+    src.includes('Requests are read as they arrive.') && !/first consideration/i.test(src),
     'the rolling-review sentence is missing',
   );
   /* No cap was ever confirmed, so no number may appear next to "families". */
