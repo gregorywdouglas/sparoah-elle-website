@@ -381,7 +381,7 @@ check('planned components are unnumbered and semantically a list', () => {
 /* WEB-CORR-005 / 007 / 008 / 009 / 010 — exact approved copy. */
 const REQUIRED_INDEX = [
   ['hero support sentence', 'Sparoah Elle gives parents a guided way to help a girl explore an idea, bring it to life, and use what she creates to serve someone else.'],
-  ['Quest definition preserved', 'A Quest is a guided family experience that combines a personalized story, parent-child conversation, a creative challenge, reflection, and an act of service.'],
+  ['Quest definition preserved', 'A Quest is a guided family experience that combines a story, parent-child conversation, a creative challenge, reflection, and an act of service.'],
   ['Queen definition', 'The Queen within is the dignity to know her worth, the courage to act on her ideas, the wisdom to choose well, the creativity to build, and the compassion to use her gifts in service to others.'],
   ['"Not status. Stewardship."', 'Not status. Stewardship.'],
   ['parent-emotional bridge preserved', 'but do not always have a clear way to help an idea move forward without taking it over'],
