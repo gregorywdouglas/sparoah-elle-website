@@ -250,7 +250,7 @@ Unchanged by design: metadata and structured data (already consistent with the v
    the visible address fallback beside it, and the footer — plus `privacy.html` ×1 and `404.html`
    ×1) and `privacy@` (1 link, the privacy notice contact section). These remain the only contact
    routes on the site, so re-test if either mailbox is ever migrated or renamed.
-2. **Confirm the initial audience.** The page states girls ages 7-11 in the hero eyebrow.
+2. **Confirm the initial audience.** The page states girls about 7–11 in the hero eyebrow.
 3. **Confirm founder naming.** The page identifies Gregory Douglas as founder.
 4. **Do not add "LLC"** until the exact legal entity name is registered and active.
 5. **Review the privacy notice with counsel** before collecting payments, using analytics,
@@ -269,7 +269,7 @@ implemented so that none of them had to be resolved to ship.
 | DEC-003 | Adult intake form timing | **Out of scope.** Version 1.2 adds no form. Implement only under `docs/specs/adult-intake.md` with separate authorization. |
 | DEC-004 | Product mockup | **None supplied.** No placeholder, stock photo, or invented rendering was added. The hero orbit remains, but WEB-CORR-003 removed its six step chips so the journey is presented once. |
 | DEC-005 | Public faith positioning | **Unchanged.** No prayer text, verse, or faith badge added. Alignment is expressed through operating boundaries. |
-| DEC-006 | Audience validation | **Unchanged.** Girls ages 7–11 remains the approved pilot assumption. |
+| DEC-006 | Audience validation | **Unchanged.** Girls ages 7–11 remains the approved pilot assumption. Since 2026-10-30 every public statement of it reads "about 7–11" (hero eyebrow, FAQ, and every description channel), because founding families will test which ages it suits best. |
 | DEC-007 | Geography and shipping scope for the completion keepsake — US-only or international, and whether a physical item ships at all | **PENDING PRODUCT LAUNCH** *(raised by the 2026-09-21 review, tagged 2026-09-22.)* Downstream of DEC-001: there is no shipping question to answer until the delivery format is decided. Nothing on the site states or implies a shipping scope, and the keepsake is described only as "a lasting reminder", never as a shipped item. No site change is needed while this stays open. Revisit with DEC-001 at product launch, not before pilot details go out. |
 
 ## Deployment

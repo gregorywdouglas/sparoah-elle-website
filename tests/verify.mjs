@@ -421,7 +421,7 @@ const REQUIRED_INDEX = [
   ['visible email fallback', 'Or email us directly at <a href="mailto:hello@sparoahelle.com">hello@sparoahelle.com</a>.'],
   ['status badge preserved', 'Founding Family Pilot — Interest list open'],
   ['tagline preserved', 'Every Quest builds the Queen within.'],
-  ['audience preserved', 'Parent-led Quest experiences for girls ages 7–11'],
+  ['audience preserved', 'Parent-led Quest experiences for girls about 7–11'],
 ];
 for (const [label, needle] of REQUIRED_INDEX) requireIn(label, 'index.html', needle);
 
@@ -663,8 +663,8 @@ check('no age or other detail about the child appears', () => {
   /* Amendment 2026-10-30: which birthday it was is no longer published. */
   assert(!/\b(eighth|8th)\b|\b(approached|turning|turned) her\b/i.test(src), 'her age is published');
   const text = textOf(src);
-  /* "girls ages 7-11" is the approved audience statement, not a detail about her. */
-  const audience = 'Parent-led Quest experiences for girls ages 7–11';
+  /* "girls about 7–11" is the approved audience statement, not a detail about her. */
+  const audience = 'Parent-led Quest experiences for girls about 7–11';
   const withoutAudience = text.split(audience).join(' ');
   for (const p of [
     [/\b(she|her|the child|his daughter) is \d+\b/i, 'current age'],
