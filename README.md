@@ -195,7 +195,7 @@ header was `default-src 'self'` with no external origins, and `sitemap.xml` `las
 2026-10-27 for both URLs. The `README.md` verification checklist was not walked item by item for
 this deploy.
 
-**2026-10-30.** Four deploys, each via `./deploy.sh` from `main` after both test suites passed,
+**2026-10-30.** Six deploys, each via `./deploy.sh` from `main` after both test suites passed,
 and each followed by a check that the live pages matched `main` exactly:
 
 | Merge commit | PR | What went live |
@@ -204,9 +204,12 @@ and each followed by a check that the live pages matched `main` exactly:
 | `f4cb7b2` | #7 | Our Story in Gregory's first-person voice with her age removed, the younger daughter's passage removed from the founder section, and every description channel reading "girls about 7 to 11". Recorded as the 2026-10-30 amendment in the Origin Story spec. |
 | `37b0ff4` | #8 | `sitemap.xml` `lastmod` advanced to 2026-10-30 for both URLs. |
 | `4651814` | #9 | The hero eyebrow reads "girls about 7–11", so every public age statement now says "about". |
+| `0fa2ba8` | #10 | No site change. #10 recorded the deploys above in this file and `CLAUDE.md`; the deploy republished identical files on request. |
+| `6a2dced` | #11 | Personalization no longer described as if it exists: the hero Quest definition "combines a story", the Quest #1 intro reads "A parent-led experience", and the FAQ says AI may help draft personalized material "once it's offered". |
 
 Held, not deployed: pre-test item A4, the privacy notice's personalization sentence, is inside the
-attorney-approved children's-privacy block and waits for counsel. Part B, the $29 founding-family
+attorney-approved children's-privacy block and waits for counsel. It is now the only place that
+still describes personalization in the present tense. Part B, the $29 founding-family
 pre-order copy, waits for the founder's values. As on 2026-10-27, the verification checklist was
 not walked item by item.
 

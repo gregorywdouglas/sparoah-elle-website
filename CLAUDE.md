@@ -3,9 +3,10 @@
 Static one-page marketing site for `https://sparoahelle.com`. `main` is live. The 2026-08-23
 correction release, the 2026-09-22 review-handoff release, the 2026-10-02 founder section and the
 2026-10-27 wording fixes were first deployed together on 2026-10-27 from merge commit `680d4b1`,
-replacing Version 1.2. Four more deploys followed on 2026-10-30 (pre-test copy fixes, Our Story in
-the founder's voice, the sitemap date, and "about 7–11" everywhere); the latest live commit is
-`4651814`. See *Deployed* in `README.md` for each one.
+replacing Version 1.2. Five content deploys followed on 2026-10-30 (pre-test copy fixes, Our
+Story in the founder's voice, the sitemap date, "about 7–11" everywhere, and personalization no
+longer described as if it exists), plus one same-content redeploy; the latest live commit is
+`6a2dced`. See *Deployed* in `README.md` for each one.
 
 Not yet live, on purpose: the privacy-notice personalization sentence (pre-test item A4), which
 sits inside the attorney-approved children's-privacy block and waits for counsel; and the $29
