@@ -43,7 +43,7 @@ decisions. Do not "improve" them without asking:
 
 Do not shorten, anonymise further, expand, or rewrite the founding story beyond the approved
 identity wording. The quotation *"Because I want to start my own company."* and the transition
-*"That answer revealed something bigger…"* are preserved exactly.
+*"That answer stayed with me…"* (approved 2026-10-30) are preserved exactly.
 
 ## Truthfulness constraints (non-negotiable)
 
@@ -74,34 +74,35 @@ change: it is downstream of the undecided delivery format, and no shipping claim
 on the site. Do not raise it as outstanding work, and do not add shipping, region, or delivery
 copy to answer it. Revisit only when the delivery format itself is decided.
 
-## Child identity (approved 2026-08-23)
+## Child identity (approved 2026-08-23, amended 2026-10-30)
 
-The child is **never named on the public site.** The origin story refers to her as
-**"Gregory's daughter"**, never as "Sparoah". The brand may be inspired by her spark without her
+The child is **never named on the public site.** Our Story is Gregory's own first-person account
+and refers to her as **"my daughter"**, never as "Sparoah". The brand may be inspired by her spark without her
 identity becoming a public business asset, and the site must not confirm that the distinctive word
 *Sparoah* is a specific minor's real first name.
 
-- The approved opening is: *"As Gregory's daughter approached her eighth birthday, he offered her
-  two summer experiences: gymnastics and a children's AI class."* **"Eighth" is spelled out**, never
-  "8th".
-- Keep the section in **third-person institutional voice**. Do not use "my daughter" and do not
-  convert it to a first-person Founder's Note without a separately approved release.
+- The approved opening is: *"Before one of my daughter's birthdays, I offered her a choice between
+  two summer programs: gymnastics, or an AI class for kids."* **Her age is not published.** The
+  earlier "eighth birthday" wording was removed on 2026-10-30; do not reintroduce which birthday it
+  was.
+- **First person stays inside Our Story** (approved 2026-10-30). The rest of the site, including the
+  founder section, stays in third person.
 - Never add current age, birth date, surname, full legal name, school or grade, location, schedule,
   recurring activities, photograph, video, voice, social account, contact details, or health,
   educational, behavioural or family information — in visible copy **or** in metadata, Open Graph
   and X/Twitter tags, JSON-LD, alt text, image filenames, HTML or JS comments, or any documentation
   that gets deployed.
-- Her birthday and age are a restrained one-time origin story, not a recurring promotional device.
-  Do not build content around "she was only eight", her birthday, or her ambitions. Future content
+- Her birthday is a restrained one-time origin story, not a recurring promotional device.
+  Do not build content around her age, her birthday, or her ambitions. Future content
   belongs on Gregory's founder journey, parent insight, building the Quest, protection by design,
   stewardship and service, and verified pilot evidence.
 - Every use of **Sparoah Elle** as the company and brand name is preserved and unaffected.
-- **One exception, approved 2026-10-02:** the founder section ("Built with legacy in mind")
-  carries founder-approved copy with additional detail about her and about Gregory's older
-  daughter. The older daughter is an adult and consented to its publication. The exception covers
-  that wording only, and the rules above still apply everywhere else, including the founder
-  section. Do not reword the section; editing it voids the approval. See the 2026-10-02
-  amendment in the Origin Story spec.
+- **One exception, approved 2026-10-02 and narrowed 2026-10-30:** the founder section ("Built
+  with legacy in mind") carries founder-approved copy about Gregory's older daughter, who is an
+  adult and consented to its publication. The younger daughter's passage (on his shoulders, and
+  *"That's because I have the same mind as you."*) was removed on 2026-10-30 and must not return.
+  Do not reword the section; editing it voids the approval. See the amendments in the Origin
+  Story spec.
 
 `tests/verify.mjs` enforces this: **every occurrence of "Sparoah" in a deployable file must be part
 of the brand name.** As of 2026-08-23 the child was named in exactly one place — the origin-story

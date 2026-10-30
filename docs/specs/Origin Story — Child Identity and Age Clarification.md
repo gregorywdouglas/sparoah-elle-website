@@ -2,7 +2,8 @@
 
 ### Status
 
-**Approved for implementation**
+**Approved for implementation.** Amended 2026-10-02 and 2026-10-30 — see the amendments at the
+end. Where they conflict with the sections above, the latest amendment governs.
 
 ### Decision
 
@@ -179,3 +180,33 @@ description (“Founded by Gregory Douglas.”), and the JSON-LD `founder`.
 
 Editing the founder-section wording voids this approval. Re-approve it before shipping a change.
 `tests/verify.mjs` pins the headline and all five paragraphs exactly.
+
+### Amendment 2026-10-30 — Our Story in the founder's voice; founder section narrowed
+
+**Status:** Approved by the founder, Gregory Douglas, 2026-10-30 (`sparoahelle-site-fixes.md`,
+items A6 and A7).
+
+**Our Story.** The passage is now Gregory's first-person account. It supersedes the third-person
+requirement, the "Gregory's daughter" wording and the "eighth birthday" detail above:
+
+> Before one of my daughter's birthdays, I offered her a choice between two summer programs:
+> gymnastics, or an AI class for kids. She chose both. When I asked why, she said:
+>
+> “Because I want to start my own company.”
+>
+> That answer stayed with me. Girls often have ideas well before adults make room for them. I
+> started Sparoah Elle to help families make that room together.
+
+- Her age is no longer published. Do not reintroduce which birthday it was.
+- The quotation stays in its pull-quote panel, and the bridge paragraph ("Parents often see the
+  spark…") is unchanged.
+- First person is confined to this section. The rest of the site stays in third person.
+
+**Founder section.** The younger daughter's passage is removed: the moment on his shoulders and
+the quotation “That’s because I have the same mind as you.” The remaining copy is unchanged except
+for the smallest fixes the removal required: the pull line now names Gregory ("Gregory Douglas has
+seen what a girl does…"), the older-daughter paragraph opens "He saw it first in his older
+daughter, now grown.", and the mission paragraph opens "Today he brings more than 25 years…". The
+facts about the older daughter are unchanged.
+
+`tests/verify.mjs` pins the new wording and fails if her age or the removed passage returns.

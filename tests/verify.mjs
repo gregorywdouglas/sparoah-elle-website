@@ -385,12 +385,12 @@ const REQUIRED_INDEX = [
   ['Queen definition', 'The Queen within is the dignity to know her worth, the courage to act on her ideas, the wisdom to choose well, the creativity to build, and the compassion to use her gifts in service to others.'],
   ['"Not status. Stewardship."', 'Not status. Stewardship.'],
   ['parent-emotional bridge preserved', 'but do not always have a clear way to help an idea move forward without taking it over'],
-  /* Origin Story — Child Identity and Age Clarification (approved 2026-08-23): the child is
-     referred to as Gregory's daughter, never by name, and "eighth" is spelled out. */
-  ['origin story opens with the approved wording', 'As Gregory’s daughter approached her eighth birthday, he offered her two summer experiences'],
+  /* Origin Story, Amendment 2026-10-30: Our Story is Gregory's first-person account. The child
+     is "my daughter", never named, and no age is given. */
+  ['origin story opens with the approved wording', 'Before one of my daughter’s birthdays, I offered her a choice between two summer programs: gymnastics, or an AI class for kids.'],
   ['founding story quotation preserved', '“Because I want to start my own company.”'],
-  ['founding insight transition preserved', 'That answer revealed something bigger. Girls often carry ideas long before adults create intentional space for them to explore those ideas.'],
-  ['brand name still closes the transition', 'Sparoah Elle was created to help families make that space—together.'],
+  ['founding insight transition preserved', 'That answer stayed with me. Girls often have ideas well before adults make room for them.'],
+  ['brand name still closes the transition', 'I started Sparoah Elle to help families make that room together.'],
   ['product description', 'designed to help a girl explore an idea she cares about, bring it to life, and discover how her gifts can make a difference.'],
   ['pilot interest-list sentence', 'If you email us, we’ll add you to the list and send the full details in writing once they’re set. Nothing is asked of you until you’ve read them and decided.'],
   ['planned-components qualification', 'These components are planned for the Founding Family Pilot and may be refined through family feedback.'],
@@ -407,14 +407,12 @@ const REQUIRED_INDEX = [
   ['direct-marketing copy', 'We market to adults, not to children.'],
   ['participation copy', 'Parents and caregivers decide whether and how a child participates.'],
   ['child-account language preserved', 'do not invite children to create accounts on this site'],
-  /* Founder section, founder-approved 2026-10-02 (Origin Story spec, Amendment 2026-10-02).
-     Editing this wording voids that approval. */
+  /* Founder section, founder-approved 2026-10-02 and narrowed 2026-10-30 (Origin Story spec,
+     amendments). Editing this wording voids that approval. */
   ['founder headline', '<h2>A father’s attention. A daughter’s spark. A shared purpose.</h2>'],
-  ['founder paragraph one', 'Sparoah Elle began with Gregory Douglas’s daughter on his shoulders, arms raised high, announcing that she was queen of the world. He paid attention, and made it his job to help her feel that way all the time: not just special, but safe enough to believe it.'],
-  ['founder paragraph two', 'One summer, she told him she had decided to start her own business. He was thrilled and said they could build it together, but before he could say anything more, she stopped him. She had thought of it all by herself, she said. “That’s because I have the same mind as you.”'],
-  ['founder paragraph three', 'That moment showed him what a girl does when she feels safe and seen: she claims her own ideas.'],
-  ['founder paragraph four', 'He had seen that belief before, in his older daughter, now grown. She has never stopped believing she can do whatever she sets out to do, and then doing it. A serial entrepreneur, she has built ventures in real estate, beauty, and fitness, and she’s now earning her MBA.'],
-  ['founder paragraph five keeps Gregory the subject', 'Today he brings that same attention, along with more than 25 years as an enterprise technology architect, to a deeply personal mission: creating safe, thoughtful experiences that help girls explore what they can build and who they can bless, and building something worthy of a child’s trust and a family’s time.'],
+  ['founder pull line names Gregory', 'Gregory Douglas has seen what a girl does when she feels safe and seen: she claims her own ideas.'],
+  ['founder older-daughter paragraph', 'He saw it first in his older daughter, now grown. She has never stopped believing she can do whatever she sets out to do, and then doing it. A serial entrepreneur, she has built ventures in real estate, beauty, and fitness, and she’s now earning her MBA.'],
+  ['founder mission paragraph keeps Gregory the subject', 'Today he brings more than 25 years as an enterprise technology architect to a deeply personal mission: creating safe, thoughtful experiences that help girls explore what they can build and who they can bless, and building something worthy of a child’s trust and a family’s time.'],
   ['navigation label', '>Founding Family Pilot</a>'],
   ['enrollment-implying copy replaced', 'Requesting information does not guarantee selection or enroll a child.'],
   ['own-contact-information notice', 'Please provide only your own contact information.'],
@@ -587,9 +585,10 @@ check('no unsupported business claim is introduced', () => {
 
 check('metadata and structured data are aligned', () => {
   const src = publicText['index.html'];
-  /* Approved 2026-10-02. One string for every description channel on every page,
-     including the JSON-LD slogan; supersedes the WEB-CORR-012 description. */
-  const DESCRIPTION = 'Sparoah Elle is building parent-led Quest experiences for girls ages 7 to 11, designed with safety and privacy first. Founded by Gregory Douglas.';
+  /* Approved 2026-10-02; "about 7 to 11" since 2026-10-30, to match the FAQ. One string for
+     every description channel on every page, including the JSON-LD slogan; supersedes the
+     WEB-CORR-012 description. */
+  const DESCRIPTION = 'Sparoah Elle is building parent-led Quest experiences for girls about 7 to 11, designed with safety and privacy first. Founded by Gregory Douglas.';
   const SOCIAL_TITLE = 'Sparoah Elle | Every Quest builds the Queen within';
   const meta = (re) => (src.match(re) || [, null])[1];
 
@@ -641,23 +640,28 @@ check('the child is never named in a deployable file', () => {
   return 'every occurrence is the brand name Sparoah Elle';
 });
 
-check('the origin story keeps third-person narration', () => {
+check('first person stays inside Our Story', () => {
   const src = publicText['index.html'];
-  assert(!/\bmy daughter\b/i.test(src), '"my daughter" would switch the section to first person');
-  /* The daughter's approved founder-section quotation is her speech, not narration. */
-  const narration = textOf(src).split('“That’s because I have the same mind as you.”').join(' ');
-  for (const p of [/\bI (am|was|have|built|created|founded)\b/, /\bmy (child|family|company|wife)\b/i]) {
+  /* Amendment 2026-10-30: Our Story is Gregory's own account; the rest of the page is not. */
+  const story = src.match(/<section class="section story" id="about">[\s\S]*?<\/section>/);
+  assert(story && /\bmy daughter\b/.test(story[0]), 'Our Story is no longer the founder\'s own account');
+  const rest = src.replace(story[0], ' ');
+  assert(!/\bmy daughter\b/i.test(rest), '"my daughter" appears outside Our Story');
+  /* The younger daughter's founder-section passage was removed 2026-10-30 and may not return. */
+  assert(!/on his shoulders|same mind as you/i.test(src), 'the removed founder-section passage is back');
+  const narration = textOf(rest);
+  for (const p of [/\bI (am|was|have|built|created|founded|started|offered|asked)\b/, /\bmy (child|family|company|wife)\b/i]) {
     const hit = narration.match(p);
     /* The mailto body is adult-authored first person by design; the page copy is not. */
     assert(!hit, `first-person narration in page copy: "${hit?.[0]}"`);
   }
-  return 'third person throughout';
+  return 'first person in Our Story only';
 });
 
-check('the child\'s age is spelled out and no other age detail appears', () => {
+check('no age or other detail about the child appears', () => {
   const src = publicText['index.html'];
-  assert(src.includes('eighth birthday'), '"eighth birthday" not found');
-  assert(!/\b8th\b/i.test(src), 'the numeral "8th" is used instead of "eighth"');
+  /* Amendment 2026-10-30: which birthday it was is no longer published. */
+  assert(!/\b(eighth|8th)\b|\b(approached|turning|turned) her\b/i.test(src), 'her age is published');
   const text = textOf(src);
   /* "girls ages 7-11" is the approved audience statement, not a detail about her. */
   const audience = 'Parent-led Quest experiences for girls ages 7–11';
@@ -674,7 +678,7 @@ check('the child\'s age is spelled out and no other age detail appears', () => {
     const hit = withoutAudience.match(p[0]);
     assert(!hit, `child detail introduced (${p[1]}): "${hit?.[0]}"`);
   }
-  return 'age spelled out; no birth date, school, location, schedule or handle';
+  return 'no age, birth date, school, location, schedule or handle';
 });
 
 check('no child-identifying information sits in metadata, JSON-LD, alt text or asset names', () => {
@@ -711,7 +715,7 @@ check('the child is not presented as founder, operator or spokesperson', () => {
   const founder = textOf(src.match(/<section class="section founder">([\s\S]*?)<\/section>/)?.[1] ?? '');
   assert(/Gregory Douglas/.test(founder), 'the founder section no longer names Gregory Douglas');
   assert(
-    /\bhe brings that same attention, along with more than 25 years as an enterprise technology architect/i.test(founder),
+    /\bhe brings more than 25 years as an enterprise technology architect/i.test(founder),
     'the founder section no longer presents Gregory as the experienced adult behind the company',
   );
   const ld = JSON.parse(src.match(/application\/ld\+json[^>]*>([\s\S]*?)<\/script>/)[1]);
