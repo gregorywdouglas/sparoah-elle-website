@@ -4,7 +4,8 @@
 >
 > The children's-privacy section in `privacy.html` was **reviewed and approved by attorney
 > Derrick Deyon**, recorded 2026-09-22. The `LEGAL-REVIEW-PENDING` marker has been removed and
-> `./deploy.sh` no longer aborts. The release **was deployed on 2026-10-27** — see *Deployed* below.
+> `./deploy.sh` no longer aborts. The release **was first deployed on 2026-10-27**, and the latest
+> deploy was 2026-10-30 — see *Deployed* below.
 >
 > The gate itself stays in `deploy.sh`. Any later change to that wording needs its own review:
 > re-add a `LEGAL-REVIEW-PENDING` comment beside the block to hold it out of a deploy until then.
@@ -193,6 +194,21 @@ deploy, `https://sparoahelle.com/` and `/privacy.html` returned 200 with the new
 header was `default-src 'self'` with no external origins, and `sitemap.xml` `lastmod` read
 2026-10-27 for both URLs. The `README.md` verification checklist was not walked item by item for
 this deploy.
+
+**2026-10-30.** Four deploys, each via `./deploy.sh` from `main` after both test suites passed,
+and each followed by a check that the live pages matched `main` exactly:
+
+| Merge commit | PR | What went live |
+| --- | --- | --- |
+| `8880dfb` | #6 | Pre-test copy fixes: founding-family lines in the future tense, the hero badge "Human review required", "first consideration" removed, and the share-link body no longer says the pilot is forming "right now". |
+| `f4cb7b2` | #7 | Our Story in Gregory's first-person voice with her age removed, the younger daughter's passage removed from the founder section, and every description channel reading "girls about 7 to 11". Recorded as the 2026-10-30 amendment in the Origin Story spec. |
+| `37b0ff4` | #8 | `sitemap.xml` `lastmod` advanced to 2026-10-30 for both URLs. |
+| `4651814` | #9 | The hero eyebrow reads "girls about 7–11", so every public age statement now says "about". |
+
+Held, not deployed: pre-test item A4, the privacy notice's personalization sentence, is inside the
+attorney-approved children's-privacy block and waits for counsel. Part B, the $29 founding-family
+pre-order copy, waits for the founder's values. As on 2026-10-27, the verification checklist was
+not walked item by item.
 
 ## What changed in Version 1.2
 
